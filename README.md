@@ -1,4 +1,3 @@
-![RhythmGameConcepts](https://github.com/user-attachments/assets/11043c7b-d3f6-4800-aac5-7dd6f9ec6953)# CS596-Final-Project
 # Game Name TBA
 # Group members
 - Alex L.
