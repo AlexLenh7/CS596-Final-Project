@@ -11,7 +11,9 @@ Our game will be a rhythm-based title developed for mobile platforms, utilizing 
 
 Gameplay is designed to be both engaging and responsive, offering a smooth feedback loop that rewards precision while providing visual and audio cues to reinforce accuracy. A dynamic combo and scoring system tracks the player’s performance, assigning ratings like Perfect, Good, or Ok based on timing accuracy. The mobile platform introduces an added layer of immediacy and immersion, as all input is handled through touch gestures without external controllers. This opens the possibility for additional mechanics such as directional swipes and more complex note patterns requiring multiple fingers. Each song's difficulty scales with its BPM and note layout, creating a progression curve that balances challenge with learnability.
 
-The win condition is straightforward: players must reach the end of a song without missing too many notes. While some leniency is allowed—through feedback grades like Good or Ok but completely missing notes consecutively in a row will gradually lead to failure. This creates a tension curve where the player must maintain rhythm and precision, especially in longer or faster tracks. The goal is to create a mobile rhythm game that feels tight, expressive, and satisfying to replay.
+The win condition is straightforward: players must reach the end of a song without missing too many notes. While some leniency is allowed—through feedback grades like Good or Ok but completely missing notes consecutively in a row will gradually lead to failure. This creates a tension curve where the player must maintain rhythm and precision, especially in longer or faster tracks. 
+
+Current goal: Create at least one well-designed and fun beatmap with responsive notes, a functioning score system, a functioning health system, and a pretty UI, all working on a mobile device.
 
 # Roles
 Alex
