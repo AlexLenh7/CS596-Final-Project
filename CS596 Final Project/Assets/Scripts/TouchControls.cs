@@ -1,50 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class TouchControls : MonoBehaviour
 {
-    private PlayerInput playerInput;
+    // assign in inspector for each lane
+    [SerializeField] private RectTransform[] lanes; 
 
-    private InputAction tapHold;
-    private InputAction tapSingle;
-
-    private void Awake()
+    void Update()
     {
-        playerInput = GetComponent<PlayerInput>();
-        tapHold = playerInput.actions["TapHold"];
-        tapSingle = playerInput.actions["TapSingle"];
-    }
-
-    private void OnEnable()
-    {
-        tapHold.Enable();
-        tapSingle.Enable();
-
-        tapHold.performed += OnTapHold;
-    }
-
-    private void OnDisable()
-    {
-        tapHold.performed -= OnTapHold;
-
-        tapHold.Disable();
-        tapSingle.Disable();
-    }
-
-    private void Update()
-    {
-        if (tapSingle != null && tapSingle.WasPressedThisFrame())
+        // check for touch input
+        if (Input.touchCount > 0)
         {
-            Debug.Log("TapSingle Pressed");
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Began)
+                {
+                    CheckTouch(touch.position);
+                }
+            }
         }
     }
-
-    private void OnTapHold(InputAction.CallbackContext context)
+    void CheckTouch(Vector2 screenPos)
     {
-        Debug.Log("TapHold Performed: " + context.ReadValue<float>());
+        for (int i = 0; i < lanes.Length; i++)
+        {
+            if (RectTransformUtility.RectangleContainsScreenPoint(lanes[i], screenPos))
+            {
+                Debug.Log($"Touched Lane {i}");
+                // TODO: Handle note hit in lane i
+                break;
+            }
+        }
     }
 }
