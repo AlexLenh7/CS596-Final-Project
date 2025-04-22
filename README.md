@@ -1,4 +1,4 @@
-# Game Name TBA
+# Game Name: Vybecheck
 # Group members
 - Alex L.
 - Jonathan N.
