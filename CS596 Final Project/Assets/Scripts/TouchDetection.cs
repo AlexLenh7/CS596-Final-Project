@@ -34,9 +34,9 @@ public class TouchDetection : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 Ray ray = Camera.main.ScreenPointToRay(pos);
+
                 if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider == GetComponent<Collider>())
                 {
-                    // IMPLEMENT NOTE DETECTION AS NEEDED 
                     isTouching = true;
                     isHold = false;
                     startTime = Time.time;
@@ -45,31 +45,25 @@ public class TouchDetection : MonoBehaviour
                     Debug.Log("Tap");
                 }
             }
-
             // check for hold
             else if (isTouching && (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved))
             {
                 // check the hold time to quantify hold
                 if (!isHold && Time.time - startTime >= holdTime)
                 {
-                    // IMPLEMENT NOTE DETECTION AS NEEDED 
-                    isHold = true;                    
-                    Debug.Log("Hold started at " + startLane);
+                    isHold = true;
                 }
             }
-
             // action for when touch ends
             else if (isTouching && touch.phase == TouchPhase.Ended)
             {
                 endPos = pos;
                 Ray endRay = Camera.main.ScreenPointToRay(endPos); 
-                GameObject endLane = null;
-                // if hold then letting go of touch should signal another touch
-                if (isHold && Physics.Raycast(endRay, out RaycastHit endHit))
+                endLane = null;
+                
+                if (Physics.Raycast(endRay, out RaycastHit endHit))
                 {
                     endLane = endHit.collider.gameObject;
-                    // IMPLEMENT NOTE DETECTION AS NEEDED 
-                    Debug.Log("Tap Ended, Hold on " + endLane);
                 }
                 // reset hold and touch
                 isTouching = false;
