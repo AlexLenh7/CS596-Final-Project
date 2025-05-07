@@ -16,6 +16,15 @@ public class TouchDetection : MonoBehaviour
     public Vector2 endPos;
     GameObject endLane;
 
+    private GameManager gameManager;
+    private Rythm rythm;
+
+    void Awake()
+    {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        rythm = gameManager.rythm;
+    }
+
     void Update()
     {
         HandleTouch();
@@ -42,7 +51,7 @@ public class TouchDetection : MonoBehaviour
                     startTime = Time.time;
                     startPos = pos; // get the start pos of hold
                     startLane = gameObject;
-                    Debug.Log("Tap");
+                    rythm.BeginTouch(startLane);
                 }
             }
             // check for hold
@@ -65,6 +74,9 @@ public class TouchDetection : MonoBehaviour
                 {
                     endLane = endHit.collider.gameObject;
                 }
+
+                rythm.EndTouch(endLane);
+
                 // reset hold and touch
                 isTouching = false;
                 isHold = false;
