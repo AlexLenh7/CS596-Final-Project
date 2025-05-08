@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     //Get highscore from scriptable object
     string songName = "name"; //menuChoices.songName;
     float highScore = 0;
+    // public string artist = "artist";
+    public string difficulty = "difficulty";
     string accuracy = "";
     float numMisses = 0;
 
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
         gameActive = true;
         //songName = menuChoices.songName;
         highScore = record.songList[songName].highScore;
+
         currScore = 0;
         streak = 0;
     }
@@ -37,14 +41,11 @@ public class GameManager : MonoBehaviour
         }
         else //Otherwise, save necessary values into scriptable object records and change scene.
         {
-            //save any relevant values to the record's list
+            //If the current score is the best, save the full record to the current song's entry
             if (currScore > highScore)
             {
-                record.songList[songName] = new SongData(songName, currScore, accuracy, numMisses);
-            }
-
-            
-            
+                record.songList[songName] = new SongData(songName, currScore, difficulty, accuracy, numMisses);
+            }   
 
             //Change scene to something else
         }
