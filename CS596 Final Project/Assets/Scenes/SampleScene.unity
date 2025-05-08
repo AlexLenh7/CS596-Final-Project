@@ -442,6 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 712033667}
+  record: {fileID: 11400000, guid: 39bac1aaf20e13442b5992bae14fb2cd, type: 2}
 --- !u!4 &712033666
 Transform:
   m_ObjectHideFlags: 0
@@ -469,6 +470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c569eb582dea86d4393eb33e2b992823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currHP: 100
+  maxHP: 100
+  score: 0
+  streak: 0
 --- !u!1 &1259514675
 GameObject:
   m_ObjectHideFlags: 0
