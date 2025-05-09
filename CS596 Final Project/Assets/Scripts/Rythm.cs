@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Rythm : MonoBehaviour
 {
+    [SerializeField] private AudioClip TapSound;
+    [Range(0f, 1f)]
+    public float volume = 1f;
     //These paramaters can be changed in the future, this is only an example for now
 
     //Terry: I am adding variables to maintain score, streaks, etc.
@@ -29,9 +32,8 @@ public class Rythm : MonoBehaviour
     public void BeginTouch(GameObject startLane)
     {
         //Collect information at beginning touch such as how far off player was from note and whatnot
+        SoundManager.instance.playSound(TapSound, transform, volume); // tap sound is called from soundmanager instance
         Debug.Log("Touch began at lane " + startLane);
-
-        
     }
 
     public void EndTouch(GameObject endLane)

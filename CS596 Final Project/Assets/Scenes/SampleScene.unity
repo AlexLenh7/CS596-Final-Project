@@ -443,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rythm: {fileID: 712033667}
   record: {fileID: 11400000, guid: 39bac1aaf20e13442b5992bae14fb2cd, type: 2}
+  difficulty: difficulty
 --- !u!4 &712033666
 Transform:
   m_ObjectHideFlags: 0
@@ -470,10 +471,57 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c569eb582dea86d4393eb33e2b992823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TapSound: {fileID: 8300000, guid: c960aabdb1e38f248b3cb12718327329, type: 3}
+  volume: 0.3
   currHP: 100
   maxHP: 100
   score: 0
   streak: 0
+--- !u!1 &956417590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 956417592}
+  - component: {fileID: 956417591}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &956417591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956417590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4f1189344d39b047841f4e40533b4b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioSourceObject: {fileID: 967378980348401878, guid: ad91b525d51b3ea489e7b85b13b51fed, type: 3}
+--- !u!4 &956417592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 956417590}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.9965677, y: -21.549887, z: 112.26924}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1259514675
 GameObject:
   m_ObjectHideFlags: 0
@@ -1198,3 +1246,4 @@ SceneRoots:
   - {fileID: 448079999}
   - {fileID: 1259514679}
   - {fileID: 712033666}
+  - {fileID: 956417592}
