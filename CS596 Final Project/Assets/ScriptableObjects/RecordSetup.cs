@@ -30,12 +30,15 @@ public class RecordSetup : MonoBehaviour
         record.songList["Sangatsu No Phantasia - Pastel Rain"]
             = new SongData("Sangatsu No Phantasia - Pastel Rain", 0, "None", "None", 0);
 
+        record.songList["Masquerade - M2U"]
+            = new SongData("Masquerade - M2U", 0, "None", "None", 0);
+
         //Expert
         record.songList["FREEDOM DiVE - xi"]
             = new SongData("FREEDOM DiVE - xi", 0, "None", "None", 0);
 
-        record.songList["YUC’e - macaron moon"]
-            = new SongData("YUC’e - macaron moon", 0, "None", "None", 0);
+        record.songList["macaron moon - YUC'e"]
+            = new SongData("macaron moon - YUC'e", 0, "None", "None", 0);
 
 
         int index = 0;
