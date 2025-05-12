@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 272170813}
   - component: {fileID: 272170812}
   - component: {fileID: 272170811}
+  - component: {fileID: 272170814}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -254,11 +255,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272170810}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8967d6e7a0f14be45acf809adb83d7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatmapParser: {fileID: 0}
+  noteSpawner: {fileID: 0}
   rythm: {fileID: 272170811}
   record: {fileID: 11400000, guid: 39bac1aaf20e13442b5992bae14fb2cd, type: 2}
   difficulty: difficulty
@@ -277,6 +280,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &272170814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272170810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9a107ab995900a45b1e8d6c1a5d6fae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laneContainer: {fileID: 1257686482}
+  lane1: {fileID: 1746360505}
+  lane2: {fileID: 397137830}
+  lane3: {fileID: 1804556500}
+  lane4: {fileID: 341238428}
+  lane5: {fileID: 1188471359}
+  singleNote: {fileID: 8147538919350239080, guid: 2f3bb3466fc9dfc4ea2c41e1cba4dca1, type: 3}
+  spawnedNote: {fileID: 0}
+  beatmapParser: {fileID: 0}
+  parsedNotes: []
 --- !u!1 &341238428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1386,7 +1411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1866409348714354978, guid: 2f3bb3466fc9dfc4ea2c41e1cba4dca1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.12500009
+      value: 0.125
       objectReference: {fileID: 0}
     - target: {fileID: 1866409348714354978, guid: 2f3bb3466fc9dfc4ea2c41e1cba4dca1, type: 3}
       propertyPath: m_LocalPosition.x

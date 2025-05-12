@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
 {
     // testing beatmap parser
     public BeatmapParser beatmapParser;
+    public NoteSpawner noteSpawner;
+    public GameObject beatMapGen;
     
     public Rythm rythm;
     public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
@@ -28,8 +30,18 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameActive = true;
-        //songName = menuChoices.songName;
-        highScore = record.songList[songName].highScore;
+        songName = "FREEDOM DiVE - xi"; //menuChoices.songName;
+        highScore = 0;//record.songList[songName].highScore;
+        //beatmapParser.ParseBeatmap(songName);
+        //highScore = record.songList[songName].highScore;
+
+        //noteSpawner = GetComponent<NoteSpawner>();
+        //noteSpawner.generateMap("FREEDOM DiVE - xi");
+        //beatMapGen.GetComponent<BeatmapParser>().ParseBeatmap(songName);
+
+        beatmapParser.ParseBeatmap(songName);
+        print(beatmapParser.parsedNotes);
+        //noteSpawner.enabled = true;
 
         currScore = 0;
         streak = 0;

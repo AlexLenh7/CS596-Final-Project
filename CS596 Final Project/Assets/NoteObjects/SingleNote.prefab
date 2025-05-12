@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6335087190664611005}
   m_Layer: 6
   m_Name: SingleNote
-  m_TagString: Untagged
+  m_TagString: Note
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,3 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba161481a597354f930597b8050f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
