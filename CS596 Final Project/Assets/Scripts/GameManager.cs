@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // testing beatmap parser
+    public BeatmapParser beatmapParser;
+    
     public Rythm rythm;
     public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
     //public ?? menuChoices; //Menu choice scriptable object
@@ -49,8 +52,12 @@ public class GameManager : MonoBehaviour
 
             //Change scene to something else
         }
+    }
 
-        
+    // call on song select to parse the beatmap specifying name
+    public void OnSongSelect(string songName)
+    {
+        beatmapParser.ParseBeatmap(songName);
     }
 
 }
