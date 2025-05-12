@@ -17,7 +17,7 @@ public class BeatmapParser : MonoBehaviour
         parsedNotes.Clear();
 
         string folderPath = Path.Combine(Application.streamingAssetsPath, "Beatmaps");
-        string targetPath = Path.Combine(folderPath, songName);
+        string targetPath = Path.Combine(folderPath, songName + ".txt");
 
         // read all lines within the file
         string[] lines = File.ReadAllLines(targetPath);

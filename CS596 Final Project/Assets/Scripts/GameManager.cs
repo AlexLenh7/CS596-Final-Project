@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     // testing beatmap parser
     public BeatmapParser beatmapParser;
-    
+ 
     public Rythm rythm;
     public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
     //public ?? menuChoices; //Menu choice scriptable object
@@ -25,12 +25,17 @@ public class GameManager : MonoBehaviour
     string accuracy = "";
     float numMisses = 0;
 
+
+    public void Awake()
+    {
+        OnSongSelect("YUC'e - macaron moon (ArtsyJon) [Hard]");
+    }
+
     private void Start()
     {
         gameActive = true;
         //songName = menuChoices.songName;
         highScore = record.songList[songName].highScore;
-
         currScore = 0;
         streak = 0;
     }
