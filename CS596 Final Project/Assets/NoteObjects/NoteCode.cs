@@ -18,10 +18,8 @@ public class NoteCode : MonoBehaviour
     void Update()
     {
         //print("Moving down");
-        //transform.Translate(new Vector3(0f, -1f, 0f) * speed * Time.deltaTime);
-        //transform.Translate(Vector3.down * speed * Time.deltaTime);
+
         transform.Translate((new Vector3(0, -1f, 0)) * speed * Time.deltaTime);
-        //Vector3 newPos = new Vector3(0, transform.localPosition.y - .01f, 0);
-        //transform.localPosition = newPos;
+
     }
 }

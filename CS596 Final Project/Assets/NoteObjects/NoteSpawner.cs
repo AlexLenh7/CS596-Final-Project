@@ -28,11 +28,13 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] AudioClip macaronMoon;
     [SerializeField] AudioClip freedomDive;
     [SerializeField] AudioClip masquerade;
+    [SerializeField] AudioClip currentSong;
     float startTime = 0;
 
     private void Start()
     {
         //mapIsReady = false;
+        currentSong = macaronMoon;
     }
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
@@ -56,20 +58,7 @@ public class NoteSpawner : MonoBehaviour
         mapIsReady = true;
         startTime = Time.time;
         //SoundManager.instance.playSound(testSound, transform, .3f);
-        delayTime = .3f;
-    }
-    IEnumerator Delay(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-    }
-
-    void playSong()
-    {
-
-        float elapsed = Time.time - startTime;
-        SoundManager.instance.playSound(macaronMoon, transform, .3f);
-        
-        
+        delayTime = .75f;
     }
 
     // Update is called once per frame
@@ -84,31 +73,32 @@ public class NoteSpawner : MonoBehaviour
             print(elapsed >= parsedNotes[0].time);
             //for (int i = 0; i < parsedNotes.Count; i++)
 
+            if (elapsed >= parsedNotes[0].time)
+            {
+                print("spawning note on lane " + parsedNotes[0].lane);
+                spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
+                spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
+                spawnedNote.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
+                spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
+
+                //Determine speed of note.
+                spawnedNote.GetComponent<NoteCode>().speed = 150; //Calculate the speed using the BPM in a formula
+
+                print(parsedNotes[0]);
+                parsedNotes.RemoveAt(0);
+
+            }
+
             if (elapsed >= delayTime)
             {
-                startTime = delayTime;
-
+                //startTime = delayTime;
                 if (isPlaying == false)
                 {
-                    SoundManager.instance.playSound(freedomDive, transform, .25f);
+                    SoundManager.instance.playSound(currentSong, transform, .25f);
                     isPlaying = true;
-                }
-                if (elapsed >= parsedNotes[0].time)
-                {
-
-                    print("spawning note on lane " + parsedNotes[0].lane);
-                    spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
-                    spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
-                    spawnedNote.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
-                    spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
-
-                    //Determine speed of note.
-                    spawnedNote.GetComponent<NoteCode>().speed = 150; //Calculate the speed using the BPM in a formula
-
-                    print(parsedNotes[0]);
-                    parsedNotes.RemoveAt(0);
 
                 }
+                
             }
             
 
