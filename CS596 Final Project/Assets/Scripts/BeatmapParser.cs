@@ -17,13 +17,9 @@ public class BeatmapParser : MonoBehaviour
         // get the folderpath and parse every file within path
         string folderPath = Path.Combine(Application.streamingAssetsPath, "Beatmaps");
 
-        if (!Directory.Exists(folderPath))
-        {
-            return;
-        }
-
         string[] osuFiles = Directory.GetFiles(folderPath);
 
+        // goes through and parses every file within folder
         foreach (var file in osuFiles)
         {
             ParseBeatmap(file);
