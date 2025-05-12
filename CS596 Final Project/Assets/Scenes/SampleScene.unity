@@ -379,6 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a82115830264cc4780d62be67491140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lane: 5
   holdTime: 0.5
   startTime: 0
   isHold: 0
@@ -528,6 +529,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8967d6e7a0f14be45acf809adb83d7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beatmapParser: {fileID: 0}
   rythm: {fileID: 712033667}
   record: {fileID: 11400000, guid: 39bac1aaf20e13442b5992bae14fb2cd, type: 2}
   difficulty: difficulty
@@ -564,6 +566,8 @@ MonoBehaviour:
   maxHP: 100
   score: 0
   streak: 0
+  timingLine: {fileID: 1747530553}
+  maxAllowedNoteDelta: 0.15
 --- !u!1 &956417590
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,6 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a82115830264cc4780d62be67491140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lane: 1
   holdTime: 0.5
   startTime: 0
   isHold: 0
@@ -947,6 +952,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a82115830264cc4780d62be67491140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lane: 3
   holdTime: 0.5
   startTime: 0
   isHold: 0
@@ -1166,6 +1172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a82115830264cc4780d62be67491140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lane: 4
   holdTime: 0.5
   startTime: 0
   isHold: 0
@@ -1298,6 +1305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a82115830264cc4780d62be67491140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lane: 2
   holdTime: 0.5
   startTime: 0
   isHold: 0
