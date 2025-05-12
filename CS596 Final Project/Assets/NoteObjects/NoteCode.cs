@@ -11,7 +11,7 @@ public class NoteCode : MonoBehaviour
     public float speed = 20f;
     void Start()
     {
-        speed = 8f;
+        //speed = 50f;
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class NoteCode : MonoBehaviour
         print("Moving down");
         //transform.Translate(new Vector3(0f, -1f, 0f) * speed * Time.deltaTime);
         //transform.Translate(Vector3.down * speed * Time.deltaTime);
-        transform.Translate((new Vector3(0, -.1f, 0)) * speed * Time.deltaTime);
+        transform.Translate((new Vector3(0, -1f, 0)) * speed * Time.deltaTime);
         //Vector3 newPos = new Vector3(0, transform.localPosition.y - .01f, 0);
         //transform.localPosition = newPos;
     }
