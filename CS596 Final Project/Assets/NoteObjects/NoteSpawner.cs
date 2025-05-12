@@ -25,8 +25,9 @@ public class NoteSpawner : MonoBehaviour
     bool isPlaying = false;
     float delayTime = 0;
 
-    [SerializeField] AudioClip testSound;
-    [SerializeField] AudioClip testSound2;
+    [SerializeField] AudioClip macaronMoon;
+    [SerializeField] AudioClip freedomDive;
+    [SerializeField] AudioClip masquerade;
     float startTime = 0;
 
     private void Start()
@@ -55,7 +56,7 @@ public class NoteSpawner : MonoBehaviour
         mapIsReady = true;
         startTime = Time.time;
         //SoundManager.instance.playSound(testSound, transform, .3f);
-        delayTime = 2.099f;
+        delayTime = .3f;
     }
     IEnumerator Delay(float seconds)
     {
@@ -66,7 +67,7 @@ public class NoteSpawner : MonoBehaviour
     {
 
         float elapsed = Time.time - startTime;
-        SoundManager.instance.playSound(testSound, transform, .3f);
+        SoundManager.instance.playSound(macaronMoon, transform, .3f);
         
         
     }
@@ -89,7 +90,7 @@ public class NoteSpawner : MonoBehaviour
 
                 if (isPlaying == false)
                 {
-                    SoundManager.instance.playSound(testSound, transform, .3f);
+                    SoundManager.instance.playSound(freedomDive, transform, .25f);
                     isPlaying = true;
                 }
                 if (elapsed >= parsedNotes[0].time)
@@ -102,7 +103,7 @@ public class NoteSpawner : MonoBehaviour
                     spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
 
                     //Determine speed of note.
-                    spawnedNote.GetComponent<NoteCode>().speed = 400; //Calculate the speed using the BPM in a formula
+                    spawnedNote.GetComponent<NoteCode>().speed = 150; //Calculate the speed using the BPM in a formula
 
                     print(parsedNotes[0]);
                     parsedNotes.RemoveAt(0);

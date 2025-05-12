@@ -6,21 +6,6 @@ public class MissLine : MonoBehaviour
 
     [SerializeField] AudioClip tapSound;
 
-    private void OnCollisionEnter2D(Collision2D coll)
-    {
-        /*
-        GameObject collidedWith = coll.gameObject;
-
-        if (collidedWith.CompareTag("Note"))
-        {         
-            //Destroy Coin
-            Destroy(collidedWith);
-            SoundManager.instance.playSound(tapSound, transform, .5f);
-            print("Played Tap");
-        }
-        */
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         GameObject collidedWith = collision.gameObject;
@@ -29,8 +14,9 @@ public class MissLine : MonoBehaviour
         {
             //Destroy Coin
             Destroy(collidedWith);
-            SoundManager.instance.playSound(tapSound, transform, .5f);
+            SoundManager.instance.playSound(tapSound, transform, .15f);
             print("Played Tap");
+
         }
 
     }

@@ -158,8 +158,9 @@ MonoBehaviour:
   spawnedNote: {fileID: 0}
   beatmapParser: {fileID: 0}
   parsedNotes: []
-  testSound: {fileID: 0}
-  testSound2: {fileID: 0}
+  macaronMoon: {fileID: 0}
+  freedomDive: {fileID: 0}
+  masquerade: {fileID: 0}
 --- !u!4 &5676945
 Transform:
   m_ObjectHideFlags: 0
@@ -360,8 +361,9 @@ MonoBehaviour:
   spawnedNote: {fileID: 0}
   beatmapParser: {fileID: 0}
   parsedNotes: []
-  testSound: {fileID: 8300000, guid: 80a7647dfc523794b931de39003d2099, type: 3}
-  testSound2: {fileID: 8300000, guid: eda97603a80201c47a6ead782ef6faf7, type: 3}
+  macaronMoon: {fileID: 8300000, guid: 80a7647dfc523794b931de39003d2099, type: 3}
+  freedomDive: {fileID: 8300000, guid: eda97603a80201c47a6ead782ef6faf7, type: 3}
+  masquerade: {fileID: 8300000, guid: 276333ffe2fd39b4f8c0aa2c275af874, type: 3}
 --- !u!114 &272170815
 MonoBehaviour:
   m_ObjectHideFlags: 0

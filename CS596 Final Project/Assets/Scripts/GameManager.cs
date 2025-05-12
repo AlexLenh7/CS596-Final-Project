@@ -29,8 +29,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameActive = true;
-        songName = "YUC'e - macaron moon (ArtsyJon)"; //menuChoices.songName;
-        //songName = "FREEDOM DiVE - xi";
+        //songName = "YUC'e - macaron moon"; //menuChoices.songName;
+        songName = "FREEDOM DiVE - xi";
+        //songName = "M2U - Masquerade";
+
         highScore = 0;//record.songList[songName].highScore;
 
         GetComponent<BeatmapParser>().ParseBeatmap(songName);
