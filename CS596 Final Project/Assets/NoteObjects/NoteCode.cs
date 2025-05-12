@@ -17,7 +17,7 @@ public class NoteCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print("Moving down");
+        //print("Moving down");
         //transform.Translate(new Vector3(0f, -1f, 0f) * speed * Time.deltaTime);
         //transform.Translate(Vector3.down * speed * Time.deltaTime);
         transform.Translate((new Vector3(0, -1f, 0)) * speed * Time.deltaTime);

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,56 +20,97 @@ public class NoteSpawner : MonoBehaviour
 
     public List<Note> parsedNotes = new List<Note>();
     public Dictionary<string, GameObject> laneNums = new Dictionary<string, GameObject>();
+    
     bool mapIsReady = false;
+    bool isPlaying = false;
+    float delayTime = 0;
+
+    [SerializeField] AudioClip testSound;
+    [SerializeField] AudioClip testSound2;
+    float startTime = 0;
 
     private void Start()
     {
-        mapIsReady = false;
+        //mapIsReady = false;
     }
-    void initialize()
+    public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
-        mapIsReady = false;
-        //laneNums["0"] = lane1;
-        //laneNums["1"] = lane2;
-        //laneNums["2"] = lane3;
-        //laneNums["3"] = lane4;
-        //laneNums["4"] = lane5; 
+        //beatmapParser.ParseBeatmap(songName);
+        //print("parsed Notes Stored");
+        parsedNotes = noteMap;
 
-        if (mapIsReady == true)
-        {
-            for (int i = 0; i < parsedNotes.Count; i++)
-            {
-                spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
-                spawnedNote.transform.SetParent(laneNums[parsedNotes[i].lane.ToString()].transform);
-                spawnedNote.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
-
-
-            }
-
-        }
-
-    }
-
-    public void generateMap(string songName)
-    {
-        beatmapParser.ParseBeatmap(songName);
-        parsedNotes = beatmapParser.parsedNotes;
-        mapIsReady = true;
-        laneNums["0"] = lane1;
-        mapIsReady = false;
-
+        //print("After parsed Notes Stored");
+        //print(parsedNotes);
         laneNums["0"] = lane1;
         laneNums["1"] = lane2;
         laneNums["2"] = lane3;
         laneNums["3"] = lane4;
         laneNums["4"] = lane5;
+        //print("lanes set");
+
+
+        //Paste to update()
+        //print(mapIsReady);
+
         mapIsReady = true;
-        initialize();
+        startTime = Time.time;
+        //SoundManager.instance.playSound(testSound, transform, .3f);
+        delayTime = 2.099f;
+    }
+    IEnumerator Delay(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
+
+    void playSong()
+    {
+
+        float elapsed = Time.time - startTime;
+        SoundManager.instance.playSound(testSound, transform, .3f);
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (mapIsReady == true && parsedNotes.Count > 0)
+        {
+            float elapsed = Time.time - startTime;
+            Debug.Log("Elapsed time: " + elapsed + " seconds");
+
+            print(parsedNotes[0].time);
+            print(elapsed >= parsedNotes[0].time);
+            //for (int i = 0; i < parsedNotes.Count; i++)
+
+            if (elapsed >= delayTime)
+            {
+                startTime = delayTime;
+
+                if (isPlaying == false)
+                {
+                    SoundManager.instance.playSound(testSound, transform, .3f);
+                    isPlaying = true;
+                }
+                if (elapsed >= parsedNotes[0].time)
+                {
+
+                    print("spawning note on lane " + parsedNotes[0].lane);
+                    spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
+                    spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
+                    spawnedNote.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
+                    spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
+
+                    //Determine speed of note.
+                    spawnedNote.GetComponent<NoteCode>().speed = 400; //Calculate the speed using the BPM in a formula
+
+                    print(parsedNotes[0]);
+                    parsedNotes.RemoveAt(0);
+
+                }
+            }
+            
+
+        }
     }
 }

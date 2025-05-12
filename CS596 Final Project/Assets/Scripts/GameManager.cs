@@ -1,13 +1,10 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     // testing beatmap parser
-    public BeatmapParser beatmapParser;
- 
-    public NoteSpawner noteSpawner;
-    public GameObject beatMapGen;
     
     public Rythm rythm;
     public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
@@ -27,22 +24,17 @@ public class GameManager : MonoBehaviour
     public string difficulty = "difficulty";
     string accuracy = "";
     float numMisses = 0;
+    public List<Note> parsedNotes = new List<Note>();
 
     private void Start()
     {
         gameActive = true;
-        songName = "FREEDOM DiVE - xi"; //menuChoices.songName;
+        songName = "YUC'e - macaron moon (ArtsyJon)"; //menuChoices.songName;
+        //songName = "FREEDOM DiVE - xi";
         highScore = 0;//record.songList[songName].highScore;
-        //beatmapParser.ParseBeatmap(songName);
-        //highScore = record.songList[songName].highScore;
 
-        //noteSpawner = GetComponent<NoteSpawner>();
-        //noteSpawner.generateMap("FREEDOM DiVE - xi");
-        //beatMapGen.GetComponent<BeatmapParser>().ParseBeatmap(songName);
-
-        beatmapParser.ParseBeatmap(songName);
-        print(beatmapParser.parsedNotes);
-        //noteSpawner.enabled = true;
+        GetComponent<BeatmapParser>().ParseBeatmap(songName);
+        GetComponent<NoteSpawner>().generateMap(GetComponent<BeatmapParser>().parsedNotes);
 
         currScore = 0;
         streak = 0;
@@ -65,12 +57,6 @@ public class GameManager : MonoBehaviour
 
             //Change scene to something else
         }
-    }
-
-    // call on song select to parse the beatmap specifying name
-    public void OnSongSelect(string songName)
-    {
-        beatmapParser.ParseBeatmap(songName);
     }
 
 }
