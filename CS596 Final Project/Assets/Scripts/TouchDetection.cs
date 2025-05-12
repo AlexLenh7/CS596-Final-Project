@@ -4,6 +4,9 @@ using Unity.Hierarchy;
 
 public class TouchDetection : MonoBehaviour
 {
+    [Header("Identification")]
+    public int lane = 1;
+
     [Header("Timings")]
     public float holdTime = 0.5f;   // time needed for it to be a hold
     public float startTime;
@@ -51,7 +54,7 @@ public class TouchDetection : MonoBehaviour
                     startTime = Time.time;
                     startPos = pos; // get the start pos of hold
                     startLane = gameObject;
-                    rythm.BeginTouch(startLane);
+                    rythm.BeginTouch(lane);
                 }
             }
             // check for hold
@@ -75,7 +78,7 @@ public class TouchDetection : MonoBehaviour
                     endLane = endHit.collider.gameObject;
                 }
 
-                rythm.EndTouch(endLane);
+                rythm.EndTouch(lane, isHold);
 
                 // reset hold and touch
                 isTouching = false;
