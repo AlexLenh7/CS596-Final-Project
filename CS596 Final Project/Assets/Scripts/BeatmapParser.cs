@@ -10,6 +10,7 @@ public class BeatmapParser : MonoBehaviour
 
     // store the paresed notes for each song
     public List<Note> parsedNotes = new List<Note>();
+    public float initialOffset = 0f;
 
     // call within game manager or song selection script
     public void ParseBeatmap(string songName)
@@ -22,12 +23,31 @@ public class BeatmapParser : MonoBehaviour
         // read all lines within the file
         string[] lines = File.ReadAllLines(targetPath);
         bool inHitObjects = false;
+        bool inTimingPoints = false;
+        bool hasOffset = false;
 
         // loop through the each line
         foreach (var line in lines)
         {
+
             // remove leading white space from lines
             string rawLine = line.Trim();
+
+            // get the initial offset used in the map
+            if (rawLine.StartsWith("[TimingPoints]"))
+            {
+                inTimingPoints = true;
+                continue;
+            }
+
+            if (inTimingPoints && !hasOffset && !string.IsNullOrEmpty(rawLine))
+            {
+                string[] TimingParts = rawLine.Split(',');
+                int offset = int.Parse(TimingParts[0]);
+                initialOffset = offset / 1000f;
+                hasOffset = true;
+                inTimingPoints = false;
+            }
 
             if (rawLine.StartsWith("[HitObjects]"))
             {
