@@ -28,13 +28,14 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] AudioClip macaronMoon;
     [SerializeField] AudioClip freedomDive;
     [SerializeField] AudioClip masquerade;
+    [SerializeField] AudioClip futureCandy;
     [SerializeField] AudioClip currentSong;
     float startTime = 0;
 
     private void Start()
     {
         //mapIsReady = false;
-        currentSong = macaronMoon;
+        currentSong = futureCandy;
     }
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
@@ -58,7 +59,7 @@ public class NoteSpawner : MonoBehaviour
         mapIsReady = true;
         startTime = Time.time;
         //SoundManager.instance.playSound(testSound, transform, .3f);
-        delayTime = .75f;
+        delayTime = 2.10f;
     }
 
     // Update is called once per frame
@@ -82,7 +83,7 @@ public class NoteSpawner : MonoBehaviour
                 spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
 
                 //Determine speed of note.
-                spawnedNote.GetComponent<NoteCode>().speed = 150; //Calculate the speed using the BPM in a formula
+                spawnedNote.GetComponent<NoteCode>().speed = 175; //Calculate the speed using the BPM in a formula
 
                 print(parsedNotes[0]);
                 parsedNotes.RemoveAt(0);
