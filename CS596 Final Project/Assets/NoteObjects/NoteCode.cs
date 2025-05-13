@@ -8,7 +8,6 @@ public class NoteCode : MonoBehaviour
     //Another script will spawn this note object inside of the lane container and at a specifed lane's X coord
     //This script's purpose is to just traverse the note down the lane at a certain speed in the Y axis
 
-    public float speed = 20f;
     public float startTime = 0;
     public float endTime = 0;
     public float elapsed = 0;
@@ -28,7 +27,8 @@ public class NoteCode : MonoBehaviour
     void Update()
     {
         //print("Moving down");
-        elapsed = Time.time - startTime;
+        //elapsed = Time.time - startTime;
+        elapsed += Time.deltaTime;
         //Old Transform Code
         //transform.Translate((new Vector3(0, -1f, 0)) * speed * Time.deltaTime);
 

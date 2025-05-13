@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,7 +44,7 @@ public class NoteSpawner : MonoBehaviour
     private void Start()
     {
         //mapIsReady = false;
-        currentSong = sidequest;
+        currentSong = masquerade;
     }
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
@@ -63,17 +64,24 @@ public class NoteSpawner : MonoBehaviour
 
         //Paste to update()
         //print(mapIsReady);
-
-        mapIsReady = true;
-        startTime = Time.time;
-        songOffset = .1351f;
+        songOffset = .3f; //.010f; //.1351f //If early increase, if late decrease
         timeToHit = 2f;
         songDelayTime = timeToHit + 1f;
 
-        for (int i = 0; i < parsedNotes.Count; i++) {
+        for (int i = 0; i < parsedNotes.Count; i++)
+        {
             spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset);
+
+            if (parsedNotes[i].type == NoteType.Hold)
+            {
+                spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
+            }
             //print(spawnTimes[i]);
         }
+
+        mapIsReady = true;
+        startTime = Time.time;
+          
         
     }
 
@@ -82,8 +90,8 @@ public class NoteSpawner : MonoBehaviour
     {
         if (mapIsReady == true && parsedNotes.Count > 0)
         {
-            elapsed = Time.time - startTime;
-            //elapsed =Time.deltaTime;
+            //elapsed = Time.time - startTime;
+            elapsed += Time.deltaTime;
             //songElapsed = Time.time - songStartTime;
 
             //Debug.Log("Elapsed time: " + elapsed + " seconds");
@@ -108,6 +116,7 @@ public class NoteSpawner : MonoBehaviour
             //if (elapsed >= parsedNotes[0].time)
             if (elapsed >= spawnTimes[0])
             {
+
                 //print("spawning note on lane " + parsedNotes[0].lane);
                 spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
                 spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
@@ -115,18 +124,35 @@ public class NoteSpawner : MonoBehaviour
                 spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
 
                 //Determine speed of note.
-                spawnedNote.GetComponent<NoteCode>().speed = 150; //Calculate the speed using the BPM in a formula
                 spawnedNote.GetComponent<NoteCode>().endTime = timeToHit;
+
+                if (parsedNotes[0].type == NoteType.Hold)
+                {
+                    spawnedNote.GetComponent<SpriteRenderer>().color = Color.cyan;
+                }
+
+                /*               
+                if (parsedNotes[0].type == NoteType.Hold)
+                {
+                    //print("spawning note on lane " + parsedNotes[0].lane);
+                    spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
+                    spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
+                    spawnedNote.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
+                    spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
+
+                    //Determine speed of note
+                    spawnedNote.GetComponent<NoteCode>().endTime = timeToHit;
+
+                }
+                */
 
                 //print(parsedNotes[0]);              
                 parsedNotes.RemoveAt(0);
                 spawnTimes.RemoveAt(0);
 
-            }
 
+            }    
             
-            
-
         }
     }
 }

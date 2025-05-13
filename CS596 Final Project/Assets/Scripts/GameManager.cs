@@ -31,10 +31,14 @@ public class GameManager : MonoBehaviour
         gameActive = true;
         //songName = "YUC'e - macaron moon"; //menuChoices.songName;
         //songName = "FREEDOM DiVE - xi";
-        //songName = "M2U - Masquerade";
-        songName = "Redside - Sidequest";
+        songName = "M2U - Masquerade";
+        //songName = "Redside - Sidequest";
+        //songName = "tutorial";
 
         highScore = 0;//record.songList[songName].highScore;
+
+        //Set FPS
+        Application.targetFrameRate = 60;
 
         GetComponent<BeatmapParser>().ParseBeatmap(songName);
         GetComponent<NoteSpawner>().generateMap(GetComponent<BeatmapParser>().parsedNotes);
