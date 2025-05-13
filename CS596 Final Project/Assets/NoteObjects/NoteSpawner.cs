@@ -19,23 +19,31 @@ public class NoteSpawner : MonoBehaviour
     public BeatmapParser beatmapParser;
 
     public List<Note> parsedNotes = new List<Note>();
+    public List<float> spawnTimes = new List<float>(); // Contains time for each note to spawn
+
     public Dictionary<string, GameObject> laneNums = new Dictionary<string, GameObject>();
     
     bool mapIsReady = false;
     bool isPlaying = false;
-    float delayTime = 0;
+    float songDelayTime = 0;
+    float songOffset = 0;
 
     [SerializeField] AudioClip macaronMoon;
     [SerializeField] AudioClip freedomDive;
     [SerializeField] AudioClip masquerade;
     [SerializeField] AudioClip futureCandy;
+    [SerializeField] AudioClip sidequest;
     [SerializeField] AudioClip currentSong;
     float startTime = 0;
+    float elapsed = 0;
+
+
+    float timeToHit = 0; //less is faster, more is slower 
 
     private void Start()
     {
         //mapIsReady = false;
-        currentSong = futureCandy;
+        currentSong = sidequest;
     }
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
@@ -58,8 +66,15 @@ public class NoteSpawner : MonoBehaviour
 
         mapIsReady = true;
         startTime = Time.time;
-        //SoundManager.instance.playSound(testSound, transform, .3f);
-        delayTime = 2.10f;
+        songOffset = .1351f;
+        timeToHit = 2f;
+        songDelayTime = timeToHit + 1f;
+
+        for (int i = 0; i < parsedNotes.Count; i++) {
+            spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset);
+            //print(spawnTimes[i]);
+        }
+        
     }
 
     // Update is called once per frame
@@ -67,40 +82,49 @@ public class NoteSpawner : MonoBehaviour
     {
         if (mapIsReady == true && parsedNotes.Count > 0)
         {
-            float elapsed = Time.time - startTime;
-            Debug.Log("Elapsed time: " + elapsed + " seconds");
+            elapsed = Time.time - startTime;
+            //elapsed =Time.deltaTime;
+            //songElapsed = Time.time - songStartTime;
 
-            print(parsedNotes[0].time);
-            print(elapsed >= parsedNotes[0].time);
-            //for (int i = 0; i < parsedNotes.Count; i++)
+            //Debug.Log("Elapsed time: " + elapsed + " seconds");
 
-            if (elapsed >= parsedNotes[0].time)
+            //print(parsedNotes[0].time);
+            //print(songElapsed);
+
+            if (elapsed >= songDelayTime)
             {
-                print("spawning note on lane " + parsedNotes[0].lane);
+                //startTime = delayTime;
+                if (isPlaying == false)
+                {
+                    //songStartTime = Time.time;
+                    //songStartTime = delayTime;
+                    SoundManager.instance.playSound(currentSong, transform, .25f);
+                    isPlaying = true;
+
+                }
+
+            }
+            //print(spawnTimes[0]);
+            //if (elapsed >= parsedNotes[0].time)
+            if (elapsed >= spawnTimes[0])
+            {
+                //print("spawning note on lane " + parsedNotes[0].lane);
                 spawnedNote = Instantiate(singleNote, new Vector3(0, .6f, 0), Quaternion.identity);
                 spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
                 spawnedNote.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
                 spawnedNote.transform.localScale = new Vector3(1, .125f, 0);
 
                 //Determine speed of note.
-                spawnedNote.GetComponent<NoteCode>().speed = 175; //Calculate the speed using the BPM in a formula
+                spawnedNote.GetComponent<NoteCode>().speed = 150; //Calculate the speed using the BPM in a formula
+                spawnedNote.GetComponent<NoteCode>().endTime = timeToHit;
 
-                print(parsedNotes[0]);
+                //print(parsedNotes[0]);              
                 parsedNotes.RemoveAt(0);
+                spawnTimes.RemoveAt(0);
 
             }
 
-            if (elapsed >= delayTime)
-            {
-                //startTime = delayTime;
-                if (isPlaying == false)
-                {
-                    SoundManager.instance.playSound(currentSong, transform, .25f);
-                    isPlaying = true;
-
-                }
-                
-            }
+            
             
 
         }

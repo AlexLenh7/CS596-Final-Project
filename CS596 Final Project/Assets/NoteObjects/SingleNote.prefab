@@ -102,6 +102,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  startTime: 0
+  endTime: 0
+  elapsed: 0
+  relPosY: 0
+  tapSound: {fileID: 8300000, guid: c960aabdb1e38f248b3cb12718327329, type: 3}
 --- !u!61 &2052176305320576845
 BoxCollider2D:
   m_ObjectHideFlags: 0
