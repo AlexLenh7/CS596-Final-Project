@@ -44,7 +44,7 @@ public class NoteSpawner : MonoBehaviour
     private void Start()
     {
         //mapIsReady = false;
-        currentSong = masquerade;
+        currentSong = currentSong;
     }
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
@@ -64,7 +64,7 @@ public class NoteSpawner : MonoBehaviour
 
         //Paste to update()
         //print(mapIsReady);
-        songOffset = .3f; //.010f; //.1351f //If early increase, if late decrease
+        songOffset = GetComponent<BeatmapParser>().initialOffset; //.010f; //.1351f //If early increase, if late decrease
         timeToHit = 2f;
         songDelayTime = timeToHit + 1f;
 

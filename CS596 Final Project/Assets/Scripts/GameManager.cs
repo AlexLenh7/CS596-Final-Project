@@ -31,9 +31,10 @@ public class GameManager : MonoBehaviour
         gameActive = true;
         //songName = "YUC'e - macaron moon"; //menuChoices.songName;
         //songName = "FREEDOM DiVE - xi";
-        songName = "M2U - Masquerade";
+        //songName = "M2U - Masquerade";
         //songName = "Redside - Sidequest";
         //songName = "tutorial";
+        songName = "Hanazawa Kana - Renai Circulation";
 
         highScore = 0;//record.songList[songName].highScore;
 

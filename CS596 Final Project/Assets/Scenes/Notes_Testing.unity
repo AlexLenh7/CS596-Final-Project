@@ -371,7 +371,7 @@ MonoBehaviour:
   masquerade: {fileID: 8300000, guid: 276333ffe2fd39b4f8c0aa2c275af874, type: 3}
   futureCandy: {fileID: 8300000, guid: 25fbd0758ec641d40ae222ef97485d5e, type: 3}
   sidequest: {fileID: 8300000, guid: f482ff40ec5e5374bbc6b3fc6a645392, type: 3}
-  currentSong: {fileID: 8300000, guid: a8b790b4b01c31e488aafc945477a1dd, type: 3}
+  currentSong: {fileID: 8300000, guid: 2a9ea80b1be36204ab81595e3bc01c3c, type: 3}
 --- !u!114 &272170815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,6 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parsedNotes: []
+  initialOffset: 0
 --- !u!1 &341238428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,6 +1455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parsedNotes: []
+  initialOffset: 0
 --- !u!4 &2015941720
 Transform:
   m_ObjectHideFlags: 0
