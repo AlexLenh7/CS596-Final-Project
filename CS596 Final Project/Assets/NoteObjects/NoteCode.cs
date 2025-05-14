@@ -59,10 +59,10 @@ public class NoteCode : MonoBehaviour
         }
     }
 
-    void DestroySelf()
+    public void DestroySelf()
     {
         //Dequeue first item in rythm's queue as that item should be us since we die by FIFO fashion
-        rythm.spawnedNotes.Dequeue();
+        rythm.spawnedNotes[note.lane].Dequeue();
         
         // add a explosion fx to the note
         if (explosionVFX != null )
@@ -70,6 +70,7 @@ public class NoteCode : MonoBehaviour
             GameObject vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
             Destroy(vfx, 1f);
         }
+
         Destroy(gameObject);
     }
 }

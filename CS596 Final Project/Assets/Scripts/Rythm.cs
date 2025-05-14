@@ -30,7 +30,9 @@ public class Rythm : MonoBehaviour
     float drainRate = .2f; //Should be taken from difficulty choice in the main menu's scriptable object
 
     public Transform timingLine;
-    public Queue<GameObject> spawnedNotes = new Queue<GameObject>();
+
+    //Queued notes indexed by lane
+    public List<Queue<GameObject>> spawnedNotes = new List<Queue<GameObject>>();
 
     [SerializeField]
     private float maxAllowedNoteDelta = 0.05f;
@@ -43,6 +45,11 @@ public class Rythm : MonoBehaviour
             
             Debug.LogWarning("Limiting both effects to first 2 elements.");
             effectsSize = 1;
+        }
+
+        for (int i = 0; i < GetComponent<NoteSpawner>().laneCount; ++i)
+        {
+            spawnedNotes.Add(new Queue<GameObject>());
         }
     }
 
@@ -123,12 +130,18 @@ public class Rythm : MonoBehaviour
     public void BeginTouch(int lane)
     {
         //Debug.Log("Touch began at lane " + lane);
+
+        if (lane > spawnedNotes.Count)
+        {
+            Debug.LogError("Invalid lane provided in TouchDetection, lanes should be 0-indexed.");
+        }
+
         SoundManager.instance.playSound(TapSound, transform, volume);
 
         float lowestY = float.MaxValue;
         GameObject lowestNote = null;
 
-        foreach (GameObject note in spawnedNotes)
+        foreach (GameObject note in spawnedNotes[lane])
         {
             NoteCode noteCode = note.GetComponent<NoteCode>();
 
@@ -150,14 +163,20 @@ public class Rythm : MonoBehaviour
         }
     }
 
-    //TODO: Calculate streaks and delete properly hit note
+    //TODO: Calculate streaks
     public void EndTouch(int lane, bool isHold)
     {
         //Debug.Log("Touch ended at lane " + lane);
+
+        if (lane > spawnedNotes.Count)
+        {
+            Debug.LogError("Invalid lane provided in TouchDetection, lanes should be 0-indexed.");
+        }
+
         GameObject hitNote = null;
 
         //Check if there was a proper hit on any of the lowest notes
-        foreach (GameObject note in spawnedNotes)
+        foreach (GameObject note in spawnedNotes[lane])
         {
             if (WasProperHit(note, lane, isHold))
             {
@@ -178,5 +197,7 @@ public class Rythm : MonoBehaviour
         
         currHP += healthEffects[effectIdx];
         score += scoreEffects[effectIdx];
+
+        hitNote.GetComponent<NoteCode>().DestroySelf();
     }
 }

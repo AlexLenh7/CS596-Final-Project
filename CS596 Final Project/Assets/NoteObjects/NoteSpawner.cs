@@ -12,6 +12,7 @@ public class NoteSpawner : MonoBehaviour
     public GameObject lane3;
     public GameObject lane4;
     public GameObject lane5;
+    public int laneCount = 5;
 
     public GameObject singleNote;
 
@@ -155,7 +156,14 @@ public class NoteSpawner : MonoBehaviour
                 */
 
                 //Add spawned note to rythm's queue
-                rythm.spawnedNotes.Enqueue(spawnedNote);
+                int lane = parsedNotes[0].lane;
+
+                if (lane >= laneCount)
+                {
+                    Debug.LogError("Note contains invalid lane");
+                }
+
+                rythm.spawnedNotes[lane].Enqueue(spawnedNote);
 
                 //print(parsedNotes[0]);              
                 parsedNotes.RemoveAt(0);
