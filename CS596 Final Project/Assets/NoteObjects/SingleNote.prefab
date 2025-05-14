@@ -101,10 +101,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba161481a597354f930597b8050f750, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  note:
+    time: 0
+    lane: 0
+    type: 0
+    holdTime: 0
+  holdStartPos: 0
   startTime: 0
   endTime: 0
   elapsed: 0
   relPosY: 0
+  rythm: {fileID: 0}
   tapSound: {fileID: 8300000, guid: c960aabdb1e38f248b3cb12718327329, type: 3}
 --- !u!61 &2052176305320576845
 BoxCollider2D:
@@ -144,7 +151,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
