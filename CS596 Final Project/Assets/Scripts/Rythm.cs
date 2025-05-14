@@ -24,12 +24,10 @@ public class Rythm : MonoBehaviour
     float drainRate = .2f; //Should be taken from difficulty choice in the main menu's scriptable object
 
     public Transform timingLine;
+    public Queue<GameObject> spawnedNotes = new Queue<GameObject>();
 
     [SerializeField]
     private float maxAllowedNoteDelta = 0.15f;
-
-    //IMPORTANT: These variables need to be populated somehow, the specific way to do so can be figured out once note spawning is complete
-    public Queue<GameObject> spawnedNotes = new Queue<GameObject>();
 
     void Start()
     {
@@ -63,6 +61,10 @@ public class Rythm : MonoBehaviour
 
         if (isHold && noteCode.note.type == NoteType.Hold)
         {
+            //The below implementation won't work since it isn't based on any hold implementation yet
+            //For example, if the holds are to be long in height and moved from its center, these values would need to be added/subtracted by the length to the midpoint
+            Debug.LogError("Hold detection doesn't properly work yet, it must be fixed once holds are implemented!");
+
             //Ensure note was started and ended at proper times, within the allowed delta
             if (!WasNoteHit(noteCode.holdStartPos, timingLine.localPosition.y) || !WasNoteHit(note.transform.localPosition.y, timingLine.localPosition.y))
             {
