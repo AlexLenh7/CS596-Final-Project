@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Rythm : MonoBehaviour
 {
@@ -31,8 +32,7 @@ public class Rythm : MonoBehaviour
     private float noteStartPos; //Y position
 
     //IMPORTANT: These variables need to be populated somehow, the specific way to do so can be figured out once note spawning is complete
-    private Note lowestNote;
-    private float noteEndTime;
+    private List<Note> lowestNotes = new List<Note>();
     private float noteCurrPos;
 
     void Start()
@@ -73,37 +73,55 @@ public class Rythm : MonoBehaviour
         return Mathf.Abs(inputPos - expectedPos) <= maxAllowedNoteDelta;
     }
 
-    //TODO: Calculate score, streaks, and delete properly hit note
-    public void EndTouch(int lane, bool isHold)
+    private bool WasProperHit(Note note, int lane, bool isHold)
     {
-        Debug.Log("Touch ended at lane " + lane);
-
         //Wrong lane or didn't stay in lane
-        if (lane != lowestNote.lane || lane != noteStartLane)
+        if (lane != note.lane || lane != noteStartLane)
         {
-            currHP -= dmgValue;
-            return;
+            return false;
         }
 
-        if (isHold && lowestNote.type == NoteType.Hold)
+        if (isHold && note.type == NoteType.Hold)
         {
             //Ensure note was started and ended at proper times, within the allowed delta
             if (!WasNoteHit(noteStartPos, timingLine.position.y) || !WasNoteHit(noteCurrPos, timingLine.position.y))
             {
-                currHP -= dmgValue;
-                return;
+                return false;
             }
         }
-        else if (!isHold && lowestNote.type == NoteType.Tap)
+        else if (!isHold && note.type == NoteType.Tap)
         {
             //Ensure note is hit at proper time, within the allowed delta
             if (!WasNoteHit(noteCurrPos, timingLine.position.y))
             {
-                currHP -= dmgValue;
-                return;
+                return false;
             }
         }
         else 
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    //TODO: Calculate score, streaks, and delete properly hit note
+    public void EndTouch(int lane, bool isHold)
+    {
+        Debug.Log("Touch ended at lane " + lane);
+        bool properHit = false;
+
+        //Check if there was a proper hit on any of the lowest notes
+        foreach (Note note in lowestNotes)
+        {
+            if (WasProperHit(note, lane, isHold))
+            {
+                properHit = true;
+                break;
+            }
+        }
+
+        if (!properHit)
         {
             currHP -= dmgValue;
             return;
