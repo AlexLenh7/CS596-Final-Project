@@ -29,9 +29,7 @@ public class Rythm : MonoBehaviour
     private float maxAllowedNoteDelta = 0.15f;
 
     //IMPORTANT: These variables need to be populated somehow, the specific way to do so can be figured out once note spawning is complete
-    private List<Note> spawnedNotes = new List<Note>();
-    private float noteCurrPos;
-    private float noteStartPos; // y-pos when the user started holding the note
+    public Queue<GameObject> spawnedNotes = new Queue<GameObject>();
 
     void Start()
     {
@@ -48,38 +46,33 @@ public class Rythm : MonoBehaviour
         }
     }
 
-    private void GetCurrNote()
-    {
-        Debug.LogError("Need to implement finding current Note!");
-        UnityEditor.EditorApplication.isPlaying = false;
-        return;
-    }
-
     private bool WasNoteHit(float inputPos, float expectedPos)
     {
         return Mathf.Abs(inputPos - expectedPos) <= maxAllowedNoteDelta;
     }
 
-    private bool WasProperHit(Note note, int lane, bool isHold)
+    private bool WasProperHit(GameObject note, int lane, bool isHold)
     {
+        NoteCode noteCode = note.GetComponent<NoteCode>();
+
         //Wrong lane
-        if (lane != note.lane)
+        if (lane != noteCode.note.lane)
         {
             return false;
         }
 
-        if (isHold && note.type == NoteType.Hold)
+        if (isHold && noteCode.note.type == NoteType.Hold)
         {
             //Ensure note was started and ended at proper times, within the allowed delta
-            if (!WasNoteHit(noteStartPos, timingLine.position.y) || !WasNoteHit(noteCurrPos, timingLine.position.y))
+            if (!WasNoteHit(noteCode.holdStartPos, timingLine.localPosition.y) || !WasNoteHit(note.transform.localPosition.y, timingLine.localPosition.y))
             {
                 return false;
             }
         }
-        else if (!isHold && note.type == NoteType.Tap)
+        else if (!isHold && noteCode.note.type == NoteType.Tap)
         {
             //Ensure note is hit at proper time, within the allowed delta
-            if (!WasNoteHit(noteCurrPos, timingLine.position.y))
+            if (!WasNoteHit(note.transform.localPosition.y, timingLine.localPosition.y))
             {
                 return false;
             }
@@ -94,24 +87,42 @@ public class Rythm : MonoBehaviour
 
     public void BeginTouch(int lane)
     {
-        Debug.Log("Touch began at lane " + lane);
+        //Debug.Log("Touch began at lane " + lane);
         SoundManager.instance.playSound(TapSound, transform, volume);
 
-        GetCurrNote();
+        float lowestY = float.MaxValue;
+        GameObject lowestNote = null;
 
-        noteStartPos = noteCurrPos;
-        Debug.LogError("Need to implement finding lowest Note in correct lane and saving its y-pos!");
-        UnityEditor.EditorApplication.isPlaying = false;
+        foreach (GameObject note in spawnedNotes)
+        {
+            NoteCode noteCode = note.GetComponent<NoteCode>();
+
+            if (noteCode.note.lane != lane)
+            {
+                continue;
+            }
+
+            if (note.transform.localPosition.y < lowestY)
+            {
+                lowestY = note.transform.localPosition.y;
+                lowestNote = note;
+            }
+        }
+
+        if (lowestNote)
+        {
+            lowestNote.GetComponent<NoteCode>().holdStartPos = lowestNote.transform.localPosition.y;
+        }
     }
 
     //TODO: Calculate score, streaks, and delete properly hit note
     public void EndTouch(int lane, bool isHold)
     {
-        Debug.Log("Touch ended at lane " + lane);
+        //Debug.Log("Touch ended at lane " + lane);
         bool properHit = false;
 
         //Check if there was a proper hit on any of the lowest notes
-        foreach (Note note in spawnedNotes)
+        foreach (GameObject note in spawnedNotes)
         {
             if (WasProperHit(note, lane, isHold))
             {
@@ -122,8 +133,11 @@ public class Rythm : MonoBehaviour
 
         if (!properHit)
         {
+            Debug.Log("DAMAGE");
             currHP -= dmgValue;
             return;
         }
+
+        Debug.Log("HIT");
     }
 }

@@ -8,11 +8,16 @@ public class NoteCode : MonoBehaviour
     //Another script will spawn this note object inside of the lane container and at a specifed lane's X coord
     //This script's purpose is to just traverse the note down the lane at a certain speed in the Y axis
 
+    public Note note;
+    public float holdStartPos; //y-pos when player started holding
+
     public float startTime = 0;
     public float endTime = 0;
     public float elapsed = 0;
 
     public float relPosY; //Relative pos to the parent (aka the lane, which should be .6 y-axis)
+
+    public Rythm rythm; //IMPORTANT: Must be set by NoteSpawner!
 
     [SerializeField] AudioClip tapSound;
     void Start()
@@ -20,7 +25,6 @@ public class NoteCode : MonoBehaviour
         //speed = 50f;
         relPosY = .6f;
         startTime = Time.time;
-        
     }
 
     // Update is called once per frame
@@ -37,7 +41,7 @@ public class NoteCode : MonoBehaviour
         {
             //float interpolationRatio = (1 - (elapsed / endTime));
             float interpolationRatio = (elapsed / endTime);
-            print(interpolationRatio);
+            //print(interpolationRatio);
             transform.localPosition = Vector3.Lerp(new Vector3(0,relPosY,0), new Vector3(0, -.1799f, 0), interpolationRatio);
 
             if (interpolationRatio >= 1) {       
@@ -47,11 +51,15 @@ public class NoteCode : MonoBehaviour
                 SoundManager.instance.playSound(tapSound, transform, .15f);
                 //print("Played Tap");
 
-                Destroy(gameObject);
-
+                DestroySelf();
             }
         }
-        
+    }
 
+    void DestroySelf()
+    {
+        //Dequeue first item in rythm's queue as that item should be us since we die by FIFO fashion
+        rythm.spawnedNotes.Dequeue();
+        Destroy(gameObject);
     }
 }

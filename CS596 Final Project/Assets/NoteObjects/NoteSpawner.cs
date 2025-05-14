@@ -41,11 +41,16 @@ public class NoteSpawner : MonoBehaviour
 
     float timeToHit = 0; //less is faster, more is slower 
 
+    private Rythm rythm;
+
     private void Start()
     {
         //mapIsReady = false;
         currentSong = currentSong;
+
+        rythm = GetComponent<Rythm>();
     }
+
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
         //beatmapParser.ParseBeatmap(songName);
@@ -81,8 +86,6 @@ public class NoteSpawner : MonoBehaviour
 
         mapIsReady = true;
         startTime = Time.time;
-          
-        
     }
 
     // Update is called once per frame
@@ -108,7 +111,6 @@ public class NoteSpawner : MonoBehaviour
                     //songStartTime = delayTime;
                     SoundManager.instance.playSound(currentSong, transform, .25f);
                     isPlaying = true;
-
                 }
 
             }
@@ -125,6 +127,12 @@ public class NoteSpawner : MonoBehaviour
 
                 //Determine speed of note.
                 spawnedNote.GetComponent<NoteCode>().endTime = timeToHit;
+
+                //Copy Note info for Rythm
+                spawnedNote.GetComponent<NoteCode>().note = parsedNotes[0];
+
+                //Prevent re-searching for Rythm
+                spawnedNote.GetComponent<NoteCode>().rythm = rythm;
 
                 if (parsedNotes[0].type == NoteType.Hold)
                 {
@@ -146,13 +154,13 @@ public class NoteSpawner : MonoBehaviour
                 }
                 */
 
+                //Add spawned note to rythm's queue
+                rythm.spawnedNotes.Enqueue(spawnedNote);
+
                 //print(parsedNotes[0]);              
                 parsedNotes.RemoveAt(0);
                 spawnTimes.RemoveAt(0);
-
-
-            }    
-            
+            }
         }
     }
 }
