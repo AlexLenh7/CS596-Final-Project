@@ -28,11 +28,10 @@ public class Rythm : MonoBehaviour
     [SerializeField]
     private float maxAllowedNoteDelta = 0.15f;
 
-    private float noteStartPos; //Y position
-
     //IMPORTANT: These variables need to be populated somehow, the specific way to do so can be figured out once note spawning is complete
-    private List<Note> lowestNotes = new List<Note>();
+    private List<Note> spawnedNotes = new List<Note>();
     private float noteCurrPos;
+    private float noteStartPos; // y-pos when the user started holding the note
 
     void Start()
     {
@@ -46,7 +45,6 @@ public class Rythm : MonoBehaviour
         {
             currHP -= dmgValue;
             yield return new WaitForSeconds(drainRate);  //wait 1 second
-
         }
     }
 
@@ -55,15 +53,6 @@ public class Rythm : MonoBehaviour
         Debug.LogError("Need to implement finding current Note!");
         UnityEditor.EditorApplication.isPlaying = false;
         return;
-    }
-
-    public void BeginTouch(int lane)
-    {
-        Debug.Log("Touch began at lane " + lane);
-        SoundManager.instance.playSound(TapSound, transform, volume);
-
-        GetCurrNote();
-        noteStartPos = noteCurrPos;
     }
 
     private bool WasNoteHit(float inputPos, float expectedPos)
@@ -103,6 +92,18 @@ public class Rythm : MonoBehaviour
         return true;
     }
 
+    public void BeginTouch(int lane)
+    {
+        Debug.Log("Touch began at lane " + lane);
+        SoundManager.instance.playSound(TapSound, transform, volume);
+
+        GetCurrNote();
+
+        noteStartPos = noteCurrPos;
+        Debug.LogError("Need to implement finding lowest Note in correct lane and saving its y-pos!");
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+
     //TODO: Calculate score, streaks, and delete properly hit note
     public void EndTouch(int lane, bool isHold)
     {
@@ -110,7 +111,7 @@ public class Rythm : MonoBehaviour
         bool properHit = false;
 
         //Check if there was a proper hit on any of the lowest notes
-        foreach (Note note in lowestNotes)
+        foreach (Note note in spawnedNotes)
         {
             if (WasProperHit(note, lane, isHold))
             {
