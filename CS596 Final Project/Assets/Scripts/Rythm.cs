@@ -127,6 +127,12 @@ public class Rythm : MonoBehaviour
         return (int)((effectsSize - 1) * (Mathf.Abs(note.transform.localPosition.y - timingLine.localPosition.y) / maxAllowedNoteDelta));
     }
 
+    public void MissedNote()
+    {
+        streak = 0;
+        currHP += healthEffects[(int)effectIdxs.MISS];
+    }
+
     public void BeginTouch(int lane)
     {
         //Debug.Log("Touch began at lane " + lane);
@@ -188,7 +194,7 @@ public class Rythm : MonoBehaviour
         //Miss
         if (!hitNote)
         {
-            currHP += healthEffects[(int)effectIdxs.MISS];
+            MissedNote();
             return;
         }
         
@@ -198,6 +204,7 @@ public class Rythm : MonoBehaviour
         currHP += healthEffects[effectIdx];
         score += scoreEffects[effectIdx];
 
-        hitNote.GetComponent<NoteCode>().DestroySelf();
+        hitNote.GetComponent<NoteCode>().DestroySelf(false);
+        streak += 1;
     }
 }

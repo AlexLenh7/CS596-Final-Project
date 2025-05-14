@@ -54,21 +54,26 @@ public class NoteCode : MonoBehaviour
                 SoundManager.instance.playSound(tapSound, transform, .15f);
                 //print("Played Tap");
 
-                DestroySelf();
+                DestroySelf(true);
             }
         }
     }
 
-    public void DestroySelf()
+    public void DestroySelf(bool missed)
     {
         //Dequeue first item in rythm's queue as that item should be us since we die by FIFO fashion
         rythm.spawnedNotes[note.lane].Dequeue();
         
         // add a explosion fx to the note
-        if (explosionVFX != null )
+        if (explosionVFX != null)
         {
             GameObject vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
             Destroy(vfx, 1f);
+        }
+
+        if (missed)
+        {
+            rythm.MissedNote();
         }
 
         Destroy(gameObject);
