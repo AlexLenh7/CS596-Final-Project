@@ -27,7 +27,7 @@ public class NoteSpawner : MonoBehaviour
     bool mapIsReady = false;
     bool isPlaying = false;
     float songDelayTime = 0;
-    float songOffset = 0;
+    public float songOffset = 0;
 
     [SerializeField] AudioClip macaronMoon;
     [SerializeField] AudioClip freedomDive;
@@ -68,7 +68,7 @@ public class NoteSpawner : MonoBehaviour
 
 
         //Paste to update()
-        //print(mapIsReady);
+        //print(mapIsReady)
         songOffset = GetComponent<BeatmapParser>().initialOffset; //.010f; //.1351f //If early increase, if late decrease
         timeToHit = 2f;
         songDelayTime = timeToHit + 1f;
@@ -79,7 +79,7 @@ public class NoteSpawner : MonoBehaviour
 
             if (parsedNotes[i].type == NoteType.Hold)
             {
-                spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
+                //spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
             }
             //print(spawnTimes[i]);
         }

@@ -1,9 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SubsystemsImplementation;
 
 public class NoteCode : MonoBehaviour
 {
+    public GameObject explosionVFX;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     //Another script will spawn this note object inside of the lane container and at a specifed lane's X coord
     //This script's purpose is to just traverse the note down the lane at a certain speed in the Y axis
@@ -60,6 +63,13 @@ public class NoteCode : MonoBehaviour
     {
         //Dequeue first item in rythm's queue as that item should be us since we die by FIFO fashion
         rythm.spawnedNotes.Dequeue();
+        
+        // add a explosion fx to the note
+        if (explosionVFX != null )
+        {
+            GameObject vfx = Instantiate(explosionVFX, transform.position, Quaternion.identity);
+            Destroy(vfx, 1f);
+        }
         Destroy(gameObject);
     }
 }
