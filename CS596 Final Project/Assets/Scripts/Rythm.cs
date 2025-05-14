@@ -28,7 +28,6 @@ public class Rythm : MonoBehaviour
     [SerializeField]
     private float maxAllowedNoteDelta = 0.15f;
 
-    private int noteStartLane;
     private float noteStartPos; //Y position
 
     //IMPORTANT: These variables need to be populated somehow, the specific way to do so can be figured out once note spawning is complete
@@ -64,7 +63,6 @@ public class Rythm : MonoBehaviour
         SoundManager.instance.playSound(TapSound, transform, volume);
 
         GetCurrNote();
-        noteStartLane = lane;
         noteStartPos = noteCurrPos;
     }
 
@@ -75,8 +73,8 @@ public class Rythm : MonoBehaviour
 
     private bool WasProperHit(Note note, int lane, bool isHold)
     {
-        //Wrong lane or didn't stay in lane
-        if (lane != note.lane || lane != noteStartLane)
+        //Wrong lane
+        if (lane != note.lane)
         {
             return false;
         }
