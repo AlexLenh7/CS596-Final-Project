@@ -371,8 +371,18 @@ MonoBehaviour:
   maxHP: 100
   score: 0
   streak: 0
+  healthEffects:
+  - 2
+  - 1
+  - -1
+  - -5
+  scoreEffects:
+  - 100
+  - 75
+  - 50
+  - 0
   timingLine: {fileID: 623591865}
-  maxAllowedNoteDelta: 0.15
+  maxAllowedNoteDelta: 0.05
 --- !u!114 &272170812
 MonoBehaviour:
   m_ObjectHideFlags: 0

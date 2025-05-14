@@ -17,6 +17,12 @@ public class Rythm : MonoBehaviour
     public float score = 0; //add to this score based on input accuracy data
     public float streak = 0; //add to this value as long as the player does not land a miss
 
+    //Health/Score effects for perfect hit, great hit, good hit, miss
+    public float[] healthEffects = new float[4] { 2f, 1f, -1f, -5f };
+    public float[] scoreEffects = new float[4] { 100f, 75f, 50f, 0f };
+    private enum effectIdxs { PERFECT, GREAT, GOOD, MISS, EFFECT_LENGTH };
+    private int effectsSize = (int)effectIdxs.EFFECT_LENGTH;
+
     //Amount of HP being subtracted 
     float dmgValue = .1f; //Should be taken from difficulty choice in the main menu's scriptable object
 
@@ -27,7 +33,18 @@ public class Rythm : MonoBehaviour
     public Queue<GameObject> spawnedNotes = new Queue<GameObject>();
 
     [SerializeField]
-    private float maxAllowedNoteDelta = 0.15f;
+    private float maxAllowedNoteDelta = 0.05f;
+
+    void Awake()
+    {
+        if (effectsSize != scoreEffects.Length || effectsSize != healthEffects.Length)
+        {
+            Debug.LogError("healthEffects or/and scoreEffects doesn't match effectsSize, this is not supported!");
+            
+            Debug.LogWarning("Limiting both effects to first 2 elements.");
+            effectsSize = 1;
+        }
+    }
 
     void Start()
     {
@@ -87,6 +104,22 @@ public class Rythm : MonoBehaviour
         return true;
     }
 
+    //Returns an index in the range [0-3] determining which Health/Score effects to use
+    private int CalculateAccuracyIdx(GameObject note)
+    {
+        Debug.LogError("Accuracy isn't calculated correctly for holds yet!");
+
+        float delta = Mathf.Abs(note.transform.localPosition.y - timingLine.localPosition.y);
+
+        if (delta > maxAllowedNoteDelta)
+        {
+            return effectsSize - 1;
+        }
+
+        //Round down the delta percentage multiplied by max index
+        return (int)((effectsSize - 1) * (Mathf.Abs(note.transform.localPosition.y - timingLine.localPosition.y) / maxAllowedNoteDelta));
+    }
+
     public void BeginTouch(int lane)
     {
         //Debug.Log("Touch began at lane " + lane);
@@ -117,29 +150,33 @@ public class Rythm : MonoBehaviour
         }
     }
 
-    //TODO: Calculate score, streaks, and delete properly hit note
+    //TODO: Calculate streaks and delete properly hit note
     public void EndTouch(int lane, bool isHold)
     {
         //Debug.Log("Touch ended at lane " + lane);
-        bool properHit = false;
+        GameObject hitNote = null;
 
         //Check if there was a proper hit on any of the lowest notes
         foreach (GameObject note in spawnedNotes)
         {
             if (WasProperHit(note, lane, isHold))
             {
-                properHit = true;
+                hitNote = note;
                 break;
             }
         }
 
-        if (!properHit)
+        //Miss
+        if (!hitNote)
         {
-            Debug.Log("DAMAGE");
-            currHP -= dmgValue;
+            currHP += healthEffects[(int)effectIdxs.MISS];
             return;
         }
-
-        Debug.Log("HIT");
+        
+        //Calculate how accurate the hit was and assign values accordingly
+        int effectIdx = CalculateAccuracyIdx(hitNote);
+        
+        currHP += healthEffects[effectIdx];
+        score += scoreEffects[effectIdx];
     }
 }
