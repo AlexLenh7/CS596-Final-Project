@@ -19,8 +19,8 @@ public class Rythm : MonoBehaviour
 
     //Health/Score effects for perfect hit, great hit, good hit, miss
     public float[] healthEffects = new float[4] { 2f, 1f, -1f, -5f };
-    public float[] scoreEffects = new float[4] { 100f, 75f, 50f, 0f };
-    private enum effectIdxs { PERFECT, GREAT, GOOD, MISS, EFFECT_LENGTH };
+    public float[] scoreEffects = new float[4] { 300f, 150f, 50f, 0f };
+    private enum effectIdxs { PERFECT, GREAT, OK, MISS, EFFECT_LENGTH };
     private int effectsSize = (int)effectIdxs.EFFECT_LENGTH;
 
     //Amount of HP being subtracted 
