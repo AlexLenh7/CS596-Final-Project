@@ -17,7 +17,7 @@ public class NoteSpawner : MonoBehaviour
     public int laneCount = 5;
 
     public GameObject singleNote;
-
+    public GameObject holdNote;
     public GameObject spawnedNote;
 
     public BeatmapParser beatmapParser;
@@ -40,8 +40,6 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] AudioClip currentSong;
     float startTime = 0;
     float elapsed = 0;
-
-
     float timeToHit = 0; //less is faster, more is slower 
 
     private Rythm rythm;
