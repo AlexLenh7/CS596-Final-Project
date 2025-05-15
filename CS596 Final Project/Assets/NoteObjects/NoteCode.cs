@@ -19,7 +19,7 @@ public class NoteCode : MonoBehaviour
     public float elapsed = 0;
 
     public float relPosY; //Relative pos to the parent (aka the lane, which should be .6 y-axis)
-
+    public float volume = .15f;
     public Rythm rythm; //IMPORTANT: Must be set by NoteSpawner!
 
     [SerializeField] AudioClip tapSound;
@@ -51,7 +51,7 @@ public class NoteCode : MonoBehaviour
                 
                 //Interpolate further instead of destroying the note when running the regular gameplay
 
-                SoundManager.instance.playSound(tapSound, transform, .15f);
+                SoundManager.instance.playSound(tapSound, transform, volume);
                 //print("Played Tap");
 
                 DestroySelf(true);

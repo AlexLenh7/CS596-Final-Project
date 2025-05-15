@@ -114,6 +114,7 @@ MonoBehaviour:
   endTime: 0
   elapsed: 0
   relPosY: 0
+  volume: 0.15
   rythm: {fileID: 0}
   tapSound: {fileID: 8300000, guid: c960aabdb1e38f248b3cb12718327329, type: 3}
 --- !u!61 &6731483636923145712
@@ -178,7 +179,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6503843219548049169
 Transform:
   m_ObjectHideFlags: 0
