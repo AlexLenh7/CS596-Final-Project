@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
                 HP.SetActive(false);
                 FailScreen.SetActive(true);
                 gameActive = false;
+                GetComponent<NoteSpawner>().parsedNotes.Clear(); 
             }
         }
         else //Otherwise, save necessary values into scriptable object records and change scene.

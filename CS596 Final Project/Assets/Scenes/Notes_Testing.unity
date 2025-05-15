@@ -481,6 +481,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rythm: {fileID: 272170811}
   record: {fileID: 11400000, guid: 39bac1aaf20e13442b5992bae14fb2cd, type: 2}
+  HP: {fileID: 407731272}
+  FailScreen: {fileID: 1677544375}
+  ResultScreen: {fileID: 1549672335}
   difficulty: difficulty
   parsedNotes: []
 --- !u!4 &272170813
