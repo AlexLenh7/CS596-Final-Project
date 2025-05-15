@@ -232,12 +232,13 @@ public class NoteSpawner : MonoBehaviour
 
 
                         distance = Mathf.Abs(headPos - tailPos);
+                        
                         //print(longPair[0].transform.localPosition);
                         //print(longPair[1].transform.localPosition);
                         //print("midpoint: " + midpoint);
 
                         //noteBody = Instantiate(holdBody, laneNums[parsedNotes[0].lane.ToString()].transform);
-                        noteBody = Instantiate(holdBody, new Vector3(0, .6f, 0), Quaternion.identity);
+                        noteBody = Instantiate(holdBody, new Vector3(0, midpoint, 0), Quaternion.identity);
                         noteBody.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
 
                         print(noteBody.transform.localScale);
@@ -248,9 +249,12 @@ public class NoteSpawner : MonoBehaviour
                         print(distance * (.3f / .10f));
                         noteBody.transform.localScale = new Vector3(1, distance * (.3f/.10f), 1);
                         noteBody.transform.localPosition = new Vector3(0, midpoint, 0);
-                        noteBody.GetComponent<NoteCode>().relPosY = midpoint;
 
-                        noteBody.GetComponent<NoteCode>().endTime = timeToHit;
+                        noteBody.GetComponent<NoteBody>().distFromTail = distance / 2;
+                        noteBody.GetComponent<NoteBody>().tail = longPair[1];
+
+                        //noteBody.GetComponent<NoteCode>().relPosY = midpoint;
+                        //noteBody.GetComponent<NoteCode>().endTime = timeToHit;
 
                         print("Body position " + noteBody.transform.localPosition);
 

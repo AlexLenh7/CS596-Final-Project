@@ -18,15 +18,24 @@ public class NoteCode : MonoBehaviour
     public float endTime = 0;
     public float elapsed = 0;
 
-    public float relPosY; //Relative pos to the parent (aka the lane, which should be .6 y-axis)
+    public float relPosY = .6f; //Relative pos to the parent (aka the lane, which should be .6 y-axis)
     public float volume = .15f;
+    public float offset = 0;
     public Rythm rythm; //IMPORTANT: Must be set by NoteSpawner!
 
+    float interpolationRatio;
+
+    public Vector3 startPos;
+    public Vector3 velocity;
+    public Vector3 lastPos;
+    public bool lerping;
     [SerializeField] AudioClip tapSound;
     void Start()
     {
         //speed = 50f;
-        relPosY = .6f;
+        startPos = transform.position;
+        lastPos = transform.position;
+        lerping = true;
         startTime = Time.time;
     }
 
@@ -37,25 +46,38 @@ public class NoteCode : MonoBehaviour
         //elapsed = Time.time - startTime;
         elapsed += Time.deltaTime;
         //Old Transform Code
-        //transform.Translate((new Vector3(0, -1f, 0)) * speed * Time.deltaTime);
+        
 
         //The ratio uses the timer from when the note spawns divided by the time it takes to reach A to B
-        if (endTime > 0)
+        if (endTime > 0 & lerping)
         {
+            velocity = (transform.localPosition - lastPos) / Time.deltaTime;
+            lastPos = transform.localPosition;
             //float interpolationRatio = (1 - (elapsed / endTime));
-            float interpolationRatio = (elapsed / endTime);
+            interpolationRatio = (elapsed / endTime);
             //print(interpolationRatio);
-            transform.localPosition = Vector3.Lerp(new Vector3(0,relPosY,0), new Vector3(0, -.1799f, 0), interpolationRatio);
+            transform.localPosition = Vector3.Lerp(new Vector3(0,relPosY + offset,0), new Vector3(0, -.1799f, 0), interpolationRatio);
             
-            if (interpolationRatio >= 1) {       
-                
-                //Interpolate further instead of destroying the note when running the regular gameplay
 
-                SoundManager.instance.playSound(tapSound, transform, volume);
+            if (interpolationRatio >= 1) {
+                lerping = false;
+                print("Lerping status: " + lerping);
+                //Interpolate further instead of destroying the note when running the regular gameplay
+                //transform.Translate((new Vector3(0, -1f, 0)) * 1 * Time.deltaTime);
+                
+
+                //SoundManager.instance.playSound(tapSound, transform, volume);
                 //print("Played Tap");
 
-                DestroySelf(true);
+                //DestroySelf(true);
             }
+            
+
+        }
+        else
+        {
+            print(velocity);
+            transform.localPosition += velocity * Time.deltaTime;
         }
     }
 
