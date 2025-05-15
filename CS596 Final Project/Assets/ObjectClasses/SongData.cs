@@ -18,7 +18,6 @@ public class SongData
         this.highDiff = highDiff;
         this.accuracy = accuracy;
         this.numMisses = numMisses;
-        
     }
 
     public void printSong()

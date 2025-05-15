@@ -38,12 +38,25 @@ public class NoteSpawner : MonoBehaviour
     float songDelayTime = 0;
     public float songOffset = 0;
 
+    string songName = SongSelection.selectedSongName;
+
     [SerializeField] AudioClip macaronMoon;
     [SerializeField] AudioClip freedomDive;
     [SerializeField] AudioClip masquerade;
     [SerializeField] AudioClip futureCandy;
     [SerializeField] AudioClip sidequest;
-    [SerializeField] AudioClip currentSong;
+    [SerializeField] AudioClip renaiCirculation;
+    AudioClip currentSong;
+
+    //string MacaronMoon = macaronMoon.name;
+    //string FreedomDive = freedomDive.name;
+    //string Masquerade = masquerade.name;
+    //string FutureCandy = futureCandy.name;
+    //string Sidequest = sidequest.name;
+    //string RenaiCirculation = renaiCirculation.name;
+
+    private Dictionary<string, AudioClip> songLibrary;
+
     float startTime = 0;
     float elapsed = 0;
     float timeToHit = 0; //less is faster, more is slower 
@@ -56,8 +69,23 @@ public class NoteSpawner : MonoBehaviour
 
     private void Start()
     {
-        //mapIsReady = false;
-        currentSong = currentSong;
+        // find the song name
+        string songName = SongSelection.selectedSongName;
+
+        if (songName == macaronMoon.name)
+            currentSong = macaronMoon;
+        else if (songName == freedomDive.name)
+            currentSong = freedomDive;
+        else if (songName == masquerade.name)
+            currentSong = masquerade;
+        else if (songName == futureCandy.name)
+            currentSong = futureCandy;
+        else if (songName == sidequest.name)
+            currentSong = sidequest;
+        else if (songName == renaiCirculation.name)
+            currentSong = renaiCirculation;
+        else
+            Debug.LogError("Song not recognized: " + songName);
 
         rythm = GetComponent<Rythm>();
     }

@@ -29,12 +29,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         gameActive = true;
-        //songName = "YUC'e - macaron moon"; //menuChoices.songName;
-        //songName = "FREEDOM DiVE - xi";
-        //songName = "M2U - Masquerade";
-        //songName = "Redside - Sidequest";
-        //songName = "tutorial";
-        songName = "Hanazawa Kana - Renai Circulation";
+        
+        // load the song from the static class selected in song selector
+        string songName = SongSelection.selectedSongName;
+        Debug.Log("Loaded song: " + songName);
 
         highScore = 0;//record.songList[songName].highScore;
 
