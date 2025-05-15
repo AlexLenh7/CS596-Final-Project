@@ -9,33 +9,38 @@ public class SoundPreview : MonoBehaviour
     [SerializeField] AudioClip sidequest;
     [SerializeField] AudioClip renaiCirculation;
 
-    public void MacaronMoon()
+    public void MacaronMoon() { SoundManager.instance.songPreview(macaronMoon, 50f, 30f, .3f); }
+    public void FreedomDive() { SoundManager.instance.songPreview(freedomDive, 28f, 30f, .3f); }
+    public void Masquerade() { SoundManager.instance.songPreview(masquerade, 50f, 30f, .3f); }
+    public void FutureCandy() { SoundManager.instance.songPreview(futureCandy, 10f, 30f, .3f); }
+    public void Sidequest() { SoundManager.instance.songPreview(sidequest, 30f, 30f, .3f); }
+    public void RenaiCirculation() { SoundManager.instance.songPreview(renaiCirculation, 57f, 30f, .5f); }
+
+    public void LoadSongMacaronMoon()
     {
-        SoundManager.instance.songPreview(macaronMoon, 50f, 30f, .3f);
+
+    }
+    public void LoadSongFreedomDive()
+    {
+
+    }
+    public void LoadSongMasquerade()
+    {
+
     }
 
-    public void FreedomDive()
+    public void LoadSongFutureCandy()
     {
-        SoundManager.instance.songPreview(freedomDive, 28f, 30f, .3f);
+
     }
 
-    public void Masquerade()
+    public void LoadSongSidequest()
     {
-        SoundManager.instance.songPreview(masquerade, 50f, 30f, .3f);
+
     }
 
-    public void FutureCandy()
-    {
-        SoundManager.instance.songPreview(futureCandy, 10f, 30f, .3f);
-    }
-
-    public void Sidequest()
-    {
-        SoundManager.instance.songPreview(sidequest, 30f, 30f, .3f);
-    }
-
-    public void RenaiCirculation()
-    {
-        SoundManager.instance.songPreview(renaiCirculation, 57f, 30f, .5f);
+    public void LoadSongRenaiCirculation()
+    { 
+    
     }
 }
