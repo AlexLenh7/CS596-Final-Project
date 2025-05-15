@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum NoteType {Tap, Hold}
+public enum NoteType {Tap, Hold, HoldBody}
 
 [Serializable]
 public class Note
