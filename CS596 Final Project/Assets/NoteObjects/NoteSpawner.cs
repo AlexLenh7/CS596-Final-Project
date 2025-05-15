@@ -177,9 +177,11 @@ public class NoteSpawner : MonoBehaviour
                     {
                         longPair.Add(spawnedNote);
                         spawnedNote.GetComponent<NoteCode>().volume = .07f;
-
+                        
                         longPair[0].GetComponent<SpriteRenderer>().color = Color.green;
                         longPair[1].GetComponent<SpriteRenderer>().color = Color.red;
+
+                        longPair[1].GetComponent<NoteCode>().secondHoldNote = true;
 
                         float headPos = longPair[0].transform.localPosition.y;
                         float tailPos = .6f;

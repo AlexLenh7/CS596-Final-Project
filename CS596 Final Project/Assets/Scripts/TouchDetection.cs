@@ -8,7 +8,7 @@ public class TouchDetection : MonoBehaviour
     public int lane = 1;
 
     [Header("Timings")]
-    public float holdTime = 0.5f;   // time needed for it to be a hold
+    public float holdTime = 0.1f;   // time needed for it to be a hold
     public float startTime;
     public bool isHold;
     public bool isTouching;

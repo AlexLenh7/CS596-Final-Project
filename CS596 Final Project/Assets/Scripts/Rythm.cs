@@ -113,27 +113,14 @@ public class Rythm : MonoBehaviour
             return false;
         }
 
-        if (isHold && noteCode.note.type == NoteType.Hold)
+        //Ensure note is hit at proper time, within the allowed delta
+        if (!WasNoteHit(note.transform.localPosition.y, timingLine.localPosition.y))
         {
-            //The below implementation won't work since it isn't based on any hold implementation yet
-            //For example, if the holds are to be long in height and moved from its center, these values would need to be added/subtracted by the length to the midpoint
-            Debug.LogError("Hold detection doesn't properly work yet, it must be fixed once holds are implemented!");
+            return false;
+        }
 
-            //Ensure note was started and ended at proper times, within the allowed delta
-            if (!WasNoteHit(noteCode.holdStartPos, timingLine.localPosition.y) || !WasNoteHit(note.transform.localPosition.y, timingLine.localPosition.y))
-            {
-                return false;
-            }
-        }
-        else if (!isHold && noteCode.note.type == NoteType.Tap)
-        {
-            //Ensure note is hit at proper time, within the allowed delta
-            if (!WasNoteHit(note.transform.localPosition.y, timingLine.localPosition.y))
-            {
-                return false;
-            }
-        }
-        else 
+        //Wrong touch input
+        if ((isHold && noteCode.note.type == NoteType.Tap) || (!isHold && noteCode.note.type == NoteType.Hold))
         {
             return false;
         }
@@ -144,8 +131,6 @@ public class Rythm : MonoBehaviour
     //Returns an index in the range [0-3] determining which Health/Score effects to use
     private int CalculateAccuracyIdx(GameObject note)
     {
-        Debug.LogError("Accuracy isn't calculated correctly for holds yet!");
-
         float delta = Mathf.Abs(note.transform.localPosition.y - timingLine.localPosition.y);
 
         if (delta > maxAllowedNoteDelta)
@@ -166,36 +151,25 @@ public class Rythm : MonoBehaviour
     public void BeginTouch(int lane)
     {
         //Debug.Log("Touch began at lane " + lane);
+        SoundManager.instance.playSound(TapSound, transform, volume);
 
         if (lane > spawnedNotes.Count)
         {
             Debug.LogError("Invalid lane provided in TouchDetection, lanes should be 0-indexed.");
         }
 
-        SoundManager.instance.playSound(TapSound, transform, volume);
-
-        float lowestY = float.MaxValue;
-        GameObject lowestNote = null;
-
-        foreach (GameObject note in spawnedNotes[lane])
+        if (spawnedNotes[lane].Count == 0)
         {
-            NoteCode noteCode = note.GetComponent<NoteCode>();
-
-            if (noteCode.note.lane != lane)
-            {
-                continue;
-            }
-
-            if (note.transform.localPosition.y < lowestY)
-            {
-                lowestY = note.transform.localPosition.y;
-                lowestNote = note;
-            }
+            MissedNote();
+            return;
         }
 
-        if (lowestNote)
+        GameObject note = spawnedNotes[lane].Peek();
+
+        //Premature end touch for current note, as real end touch will come later for second hold note
+        if (note.GetComponent<NoteCode>().note.type == NoteType.Hold && !note.GetComponent<NoteCode>().secondHoldNote)
         {
-            lowestNote.GetComponent<NoteCode>().holdStartPos = lowestNote.transform.localPosition.y;
+            EndTouch(lane, true);
         }
     }
 
@@ -208,32 +182,34 @@ public class Rythm : MonoBehaviour
             Debug.LogError("Invalid lane provided in TouchDetection, lanes should be 0-indexed.");
         }
 
-        GameObject hitNote = null;
-
-        //Check if there was a proper hit on any of the lowest notes
-        foreach (GameObject note in spawnedNotes[lane])
+        if (spawnedNotes[lane].Count == 0)
         {
-            if (WasProperHit(note, lane, isHold))
-            {
-                hitNote = note;
-                break;
-            }
+            MissedNote();
+            return;
         }
 
-        //Miss
-        if (!hitNote)
+        GameObject note = spawnedNotes[lane].Peek();
+
+        //Check if there was a proper hit
+        if (!WasProperHit(note, lane, isHold))
         {
+            if (note.GetComponent<NoteCode>().secondHoldNote) //as long as hold try that
+            {
+                note.GetComponent<NoteCode>().DestroySelf(true);
+                return;
+            }
+
             MissedNote();
             return;
         }
         
         //Calculate how accurate the hit was and assign values accordingly
-        int effectIdx = CalculateAccuracyIdx(hitNote);
+        int effectIdx = CalculateAccuracyIdx(note);
         
         currHP += healthEffects[effectIdx];
         score += scoreEffects[effectIdx];
 
-        hitNote.GetComponent<NoteCode>().DestroySelf(false);
+        note.GetComponent<NoteCode>().DestroySelf(false);
         streak += 1;
     }
 }

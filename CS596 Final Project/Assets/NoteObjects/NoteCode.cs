@@ -12,7 +12,7 @@ public class NoteCode : MonoBehaviour
     //This script's purpose is to just traverse the note down the lane at a certain speed in the Y axis
 
     public Note note;
-    public float holdStartPos; //y-pos when player started holding
+    public bool secondHoldNote = false;
 
     public float startTime = 0;
     public float endTime = 0;

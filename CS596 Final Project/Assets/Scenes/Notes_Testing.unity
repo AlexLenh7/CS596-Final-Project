@@ -824,7 +824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 3
-  holdTime: 0.5
+  holdTime: 0.1
   startTime: 0
   isHold: 0
   isTouching: 0
@@ -1160,7 +1160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 1
-  holdTime: 0.5
+  holdTime: 0.1
   startTime: 0
   isHold: 0
   isTouching: 0
@@ -1811,7 +1811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 4
-  holdTime: 0.5
+  holdTime: 0.1
   startTime: 0
   isHold: 0
   isTouching: 0
@@ -2552,7 +2552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 0
-  holdTime: 0.5
+  holdTime: 0.1
   startTime: 0
   isHold: 0
   isTouching: 0
@@ -2690,7 +2690,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 2
-  holdTime: 0.5
+  holdTime: 0.1
   startTime: 0
   isHold: 0
   isTouching: 0
