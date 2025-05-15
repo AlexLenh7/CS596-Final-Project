@@ -1421,7 +1421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e40f15a5e66d9b409c22b69f6f42c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapSound: {fileID: 0}
+  tapSound: {fileID: 8300000, guid: eaa76462919a7544c9601b9d92cbc87f, type: 3}
 --- !u!1 &1746360505
 GameObject:
   m_ObjectHideFlags: 0

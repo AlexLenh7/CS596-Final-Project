@@ -48,13 +48,6 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] AudioClip renaiCirculation;
     AudioClip currentSong;
 
-    //string MacaronMoon = macaronMoon.name;
-    //string FreedomDive = freedomDive.name;
-    //string Masquerade = masquerade.name;
-    //string FutureCandy = futureCandy.name;
-    //string Sidequest = sidequest.name;
-    //string RenaiCirculation = renaiCirculation.name;
-
     private Dictionary<string, AudioClip> songLibrary;
 
     float startTime = 0;
