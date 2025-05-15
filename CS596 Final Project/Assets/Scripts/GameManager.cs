@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,11 @@ public class GameManager : MonoBehaviour
     public Rythm rythm;
     public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
     //public ?? menuChoices; //Menu choice scriptable object
+
+    // Alternate screens to be shown
+    public GameObject HP;
+    public GameObject FailScreen;
+    public GameObject ResultScreen;
 
     //Is the game active
     bool gameActive = true;
@@ -52,6 +58,13 @@ public class GameManager : MonoBehaviour
             currScore = rythm.score;
             streak = rythm.streak;
             //Do all detections here.
+
+            // Game over when hp falls below 0
+            if (rythm.currHP <= 0) {
+                HP.SetActive(false);
+                FailScreen.SetActive(true);
+                gameActive = false;
+            }
         }
         else //Otherwise, save necessary values into scriptable object records and change scene.
         {
