@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6727945448272723472}
   - component: {fileID: 2239477863683093493}
   - component: {fileID: 6731483636923145712}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HoldNote
   m_TagString: Note
   m_Icon: {fileID: 0}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -1133616534069250268, guid: 12f5e28401cb63041b79be9ee2543d1a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -113,8 +113,9 @@ MonoBehaviour:
   startTime: 0
   endTime: 0
   elapsed: 0
-  relPosY: 0
+  relPosY: 0.6
   volume: 0.15
+  offset: 0
   rythm: {fileID: 0}
   tapSound: {fileID: 8300000, guid: c960aabdb1e38f248b3cb12718327329, type: 3}
 --- !u!61 &6731483636923145712
@@ -173,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6503843219548049169}
   - component: {fileID: 3854997684560152226}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HoldBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
