@@ -8,7 +8,7 @@ public class MissLine : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        /*
+       
         GameObject collidedWith = collision.gameObject;
 
         if (collidedWith.CompareTag("Note"))
@@ -19,7 +19,7 @@ public class MissLine : MonoBehaviour
             print("Played Tap");
 
         }
-        */
+        
 
     }
 
