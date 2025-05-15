@@ -169,7 +169,6 @@ public class Rythm : MonoBehaviour
         }
     }
 
-    //TODO: Calculate streaks
     public void EndTouch(int lane, bool isHold)
     {
         //Debug.Log("Touch ended at lane " + lane);
