@@ -19,8 +19,8 @@ public class Rythm : MonoBehaviour
 
     //Health/Score effects for perfect hit, great hit, good hit, miss
     public float[] healthEffects = new float[4] { 2f, 1f, -1f, -5f };
-    public float[] scoreEffects = new float[4] { 100f, 75f, 50f, 0f };
-    private enum effectIdxs { PERFECT, GREAT, GOOD, MISS, EFFECT_LENGTH };
+    public float[] scoreEffects = new float[4] { 300f, 150f, 50f, 0f };
+    private enum effectIdxs { PERFECT, GREAT, OK, MISS, EFFECT_LENGTH };
     private int effectsSize = (int)effectIdxs.EFFECT_LENGTH;
 
     //Amount of HP being subtracted 
@@ -30,7 +30,9 @@ public class Rythm : MonoBehaviour
     float drainRate = .2f; //Should be taken from difficulty choice in the main menu's scriptable object
 
     public Transform timingLine;
-    public Queue<GameObject> spawnedNotes = new Queue<GameObject>();
+
+    //Queued notes indexed by lane
+    public List<Queue<GameObject>> spawnedNotes = new List<Queue<GameObject>>();
 
     [SerializeField]
     private float maxAllowedNoteDelta = 0.05f;
@@ -43,6 +45,11 @@ public class Rythm : MonoBehaviour
             
             Debug.LogWarning("Limiting both effects to first 2 elements.");
             effectsSize = 1;
+        }
+
+        for (int i = 0; i < GetComponent<NoteSpawner>().laneCount; ++i)
+        {
+            spawnedNotes.Add(new Queue<GameObject>());
         }
     }
 
@@ -120,15 +127,27 @@ public class Rythm : MonoBehaviour
         return (int)((effectsSize - 1) * (Mathf.Abs(note.transform.localPosition.y - timingLine.localPosition.y) / maxAllowedNoteDelta));
     }
 
+    public void MissedNote()
+    {
+        streak = 0;
+        currHP += healthEffects[(int)effectIdxs.MISS];
+    }
+
     public void BeginTouch(int lane)
     {
         //Debug.Log("Touch began at lane " + lane);
+
+        if (lane > spawnedNotes.Count)
+        {
+            Debug.LogError("Invalid lane provided in TouchDetection, lanes should be 0-indexed.");
+        }
+
         SoundManager.instance.playSound(TapSound, transform, volume);
 
         float lowestY = float.MaxValue;
         GameObject lowestNote = null;
 
-        foreach (GameObject note in spawnedNotes)
+        foreach (GameObject note in spawnedNotes[lane])
         {
             NoteCode noteCode = note.GetComponent<NoteCode>();
 
@@ -150,14 +169,19 @@ public class Rythm : MonoBehaviour
         }
     }
 
-    //TODO: Calculate streaks and delete properly hit note
     public void EndTouch(int lane, bool isHold)
     {
         //Debug.Log("Touch ended at lane " + lane);
+
+        if (lane > spawnedNotes.Count)
+        {
+            Debug.LogError("Invalid lane provided in TouchDetection, lanes should be 0-indexed.");
+        }
+
         GameObject hitNote = null;
 
         //Check if there was a proper hit on any of the lowest notes
-        foreach (GameObject note in spawnedNotes)
+        foreach (GameObject note in spawnedNotes[lane])
         {
             if (WasProperHit(note, lane, isHold))
             {
@@ -169,7 +193,7 @@ public class Rythm : MonoBehaviour
         //Miss
         if (!hitNote)
         {
-            currHP += healthEffects[(int)effectIdxs.MISS];
+            MissedNote();
             return;
         }
         
@@ -178,5 +202,8 @@ public class Rythm : MonoBehaviour
         
         currHP += healthEffects[effectIdx];
         score += scoreEffects[effectIdx];
+
+        hitNote.GetComponent<NoteCode>().DestroySelf(false);
+        streak += 1;
     }
 }

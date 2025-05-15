@@ -12,6 +12,7 @@ public class NoteSpawner : MonoBehaviour
     public GameObject lane3;
     public GameObject lane4;
     public GameObject lane5;
+    public int laneCount = 5;
 
     public GameObject singleNote;
 
@@ -27,7 +28,7 @@ public class NoteSpawner : MonoBehaviour
     bool mapIsReady = false;
     bool isPlaying = false;
     float songDelayTime = 0;
-    float songOffset = 0;
+    public float songOffset = 0;
 
     [SerializeField] AudioClip macaronMoon;
     [SerializeField] AudioClip freedomDive;
@@ -68,7 +69,7 @@ public class NoteSpawner : MonoBehaviour
 
 
         //Paste to update()
-        //print(mapIsReady);
+        //print(mapIsReady)
         songOffset = GetComponent<BeatmapParser>().initialOffset; //.010f; //.1351f //If early increase, if late decrease
         timeToHit = 2f;
         songDelayTime = timeToHit + 1f;
@@ -79,7 +80,7 @@ public class NoteSpawner : MonoBehaviour
 
             if (parsedNotes[i].type == NoteType.Hold)
             {
-                spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
+                //spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
             }
             //print(spawnTimes[i]);
         }
@@ -155,7 +156,14 @@ public class NoteSpawner : MonoBehaviour
                 */
 
                 //Add spawned note to rythm's queue
-                rythm.spawnedNotes.Enqueue(spawnedNote);
+                int lane = parsedNotes[0].lane;
+
+                if (lane >= laneCount)
+                {
+                    Debug.LogError("Note contains invalid lane");
+                }
+
+                rythm.spawnedNotes[lane].Enqueue(spawnedNote);
 
                 //print(parsedNotes[0]);              
                 parsedNotes.RemoveAt(0);
