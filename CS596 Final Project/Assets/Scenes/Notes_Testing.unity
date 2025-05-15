@@ -154,6 +154,7 @@ MonoBehaviour:
   lane3: {fileID: 0}
   lane4: {fileID: 0}
   lane5: {fileID: 0}
+  laneCount: 5
   singleNote: {fileID: 8147538919350239080, guid: 2f3bb3466fc9dfc4ea2c41e1cba4dca1, type: 3}
   spawnedNote: {fileID: 0}
   beatmapParser: {fileID: 0}
@@ -433,6 +434,7 @@ MonoBehaviour:
   lane3: {fileID: 1804556500}
   lane4: {fileID: 341238428}
   lane5: {fileID: 1188471359}
+  laneCount: 5
   singleNote: {fileID: 8147538919350239080, guid: 2f3bb3466fc9dfc4ea2c41e1cba4dca1, type: 3}
   spawnedNote: {fileID: 0}
   beatmapParser: {fileID: 0}

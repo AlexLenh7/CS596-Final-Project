@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      VybePerfect_0: 4044784733446329724
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
