@@ -70,6 +70,11 @@ public class GameManager : MonoBehaviour
                 gameActive = false;
                 GetComponent<NoteSpawner>().parsedNotes.Clear(); 
             }
+            
+            // Result screen when no more notes and hp isn't 0
+            if (rythm.currHP > 0 && GetComponent<NoteSpawner>().parsedNotes.Count == 0) {
+                StartCoroutine(ShowResults());
+            }
         }
         else //Otherwise, save necessary values into scriptable object records and change scene.
         {
@@ -81,5 +86,13 @@ public class GameManager : MonoBehaviour
 
             //Change scene to something else
         }
+    }
+
+    IEnumerator<WaitForSeconds> ShowResults()
+    {
+        yield return new WaitForSeconds(2);
+        HP.SetActive(false);
+        ResultScreen.SetActive(true);
+        gameActive = false;
     }
 }
