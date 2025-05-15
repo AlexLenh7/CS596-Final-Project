@@ -235,7 +235,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      VybeMiss_0: -4884313115666419163
+      VybeMiss_1: -8109497473996908870
+      VybeMiss_2: -388000011366856006
+      VybeMiss_3: 9031038274082414782
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

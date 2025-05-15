@@ -185,7 +185,9 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      VybeOk_0: 5873585829334178552
+      VybeOk_1: -6100531722703988609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
