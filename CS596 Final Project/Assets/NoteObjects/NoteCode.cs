@@ -6,7 +6,7 @@ using UnityEngine.SubsystemsImplementation;
 public class NoteCode : MonoBehaviour
 {
     public GameObject explosionVFX;
-
+    public GameObject lightVFX;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     //Another script will spawn this note object inside of the lane container and at a specifed lane's X coord
     //This script's purpose is to just traverse the note down the lane at a certain speed in the Y axis
@@ -46,7 +46,7 @@ public class NoteCode : MonoBehaviour
             float interpolationRatio = (elapsed / endTime);
             //print(interpolationRatio);
             transform.localPosition = Vector3.Lerp(new Vector3(0,relPosY,0), new Vector3(0, -.1799f, 0), interpolationRatio);
-
+            
             if (interpolationRatio >= 1) {       
                 
                 //Interpolate further instead of destroying the note when running the regular gameplay
