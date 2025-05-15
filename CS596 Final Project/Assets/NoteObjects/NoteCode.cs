@@ -42,42 +42,25 @@ public class NoteCode : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //print("Moving down");
-        //elapsed = Time.time - startTime;
         elapsed += Time.deltaTime;
-        //Old Transform Code
         
-
         //The ratio uses the timer from when the note spawns divided by the time it takes to reach A to B
         if (endTime > 0 & lerping)
         {
             velocity = (transform.localPosition - lastPos) / Time.deltaTime;
             lastPos = transform.localPosition;
-            //float interpolationRatio = (1 - (elapsed / endTime));
             interpolationRatio = (elapsed / endTime);
-            //print(interpolationRatio);
+
             transform.localPosition = Vector3.Lerp(new Vector3(0,relPosY + offset,0), new Vector3(0, -.1799f, 0), interpolationRatio);
             
-
-            if (interpolationRatio >= 1) {
+            if (interpolationRatio >= 1)
+            {
                 lerping = false;
-                //print("Lerping status: " + lerping);
-                //Interpolate further instead of destroying the note when running the regular gameplay
-                //transform.Translate((new Vector3(0, -1f, 0)) * 1 * Time.deltaTime);
-                
-
-                //SoundManager.instance.playSound(tapSound, transform, volume);
-                //print("Played Tap");
-
-                //DestroySelf(true);
             }
-            
-
         }
         else
         {
-            //print(velocity);
-            //transform.localPosition += velocity * Time.deltaTime;
+            transform.localPosition += velocity * Time.deltaTime;
         }
     }
 
