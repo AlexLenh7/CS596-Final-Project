@@ -61,7 +61,7 @@ public class NoteCode : MonoBehaviour
 
             if (interpolationRatio >= 1) {
                 lerping = false;
-                print("Lerping status: " + lerping);
+                //print("Lerping status: " + lerping);
                 //Interpolate further instead of destroying the note when running the regular gameplay
                 //transform.Translate((new Vector3(0, -1f, 0)) * 1 * Time.deltaTime);
                 
@@ -76,8 +76,8 @@ public class NoteCode : MonoBehaviour
         }
         else
         {
-            print(velocity);
-            transform.localPosition += velocity * Time.deltaTime;
+            //print(velocity);
+            //transform.localPosition += velocity * Time.deltaTime;
         }
     }
 
