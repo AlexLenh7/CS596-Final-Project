@@ -15,32 +15,4 @@ public class SoundPreview : MonoBehaviour
     public void FutureCandy() { SoundManager.instance.songPreview(futureCandy, 10f, 30f, .3f); }
     public void Sidequest() { SoundManager.instance.songPreview(sidequest, 30f, 30f, .3f); }
     public void RenaiCirculation() { SoundManager.instance.songPreview(renaiCirculation, 57f, 30f, .5f); }
-
-    public void LoadSongMacaronMoon()
-    {
-
-    }
-    public void LoadSongFreedomDive()
-    {
-
-    }
-    public void LoadSongMasquerade()
-    {
-
-    }
-
-    public void LoadSongFutureCandy()
-    {
-
-    }
-
-    public void LoadSongSidequest()
-    {
-
-    }
-
-    public void LoadSongRenaiCirculation()
-    { 
-    
-    }
 }

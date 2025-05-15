@@ -302,6 +302,7 @@ namespace CartoonFX
                         var letterObj = this.transform.GetChild(currentChild).gameObject;
                         letterObj.name = letter.ToString();
                         var ps = letterObj.GetComponent<ParticleSystem>();
+
 #if UNITY_EDITOR
                         if (!isDynamic)
                         {

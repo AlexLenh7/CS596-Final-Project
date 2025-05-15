@@ -1,24 +1,29 @@
+using CartoonFX;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Rythm : MonoBehaviour
 {
+    public CFXR_ParticleText comboTextEffectPrefab;
+    public RectTransform uiCanvas;
+    CFXR_ParticleText comboTextInstance;
+
     [SerializeField] private AudioClip TapSound;
     [Range(0f, 1f)]
     public float volume = 1f;
 
     //Terry: I am adding variables to maintain score, streaks, etc.
     //Terry: Using the data collected from inputs, determine scores and conditions within this entire script
-    
+
     //Game manager will read these variables to determine win conditions.
     public float currHP = 100; //Heal this value depending on accuracy
     public float maxHP = 100; //MaxHP
     public float score = 0; //add to this score based on input accuracy data
-    public float streak = 0; //add to this value as long as the player does not land a miss
+    public int streak = 0; //add to this value as long as the player does not land a miss
 
     //Health/Score effects for perfect hit, great hit, good hit, miss
-    public float[] healthEffects = new float[4] { 2f, 1f, -1f, -5f };
+    public float[] healthEffects = new float[4] { 2f, 1f, 0f, -5f };
     public float[] scoreEffects = new float[4] { 300f, 150f, 50f, 0f };
     private enum effectIdxs { PERFECT, GREAT, OK, MISS, EFFECT_LENGTH };
     private int effectsSize = (int)effectIdxs.EFFECT_LENGTH;
@@ -57,6 +62,32 @@ public class Rythm : MonoBehaviour
     {
         //Bleed damage over time
         StartCoroutine("dmgOverTime");
+
+        comboTextInstance = Instantiate(
+            comboTextEffectPrefab,
+            uiCanvas   // parent
+        );
+        comboTextInstance.transform.localScale = Vector3.one;
+        comboTextInstance.isDynamic = true;
+    }
+
+    public void AddToStreak(int delta)
+    {
+        streak += delta;
+        UpdateStreakDisplay();
+    }
+    void UpdateStreakDisplay()
+    {
+        // convert int to string
+        string text = streak.ToString();
+
+        // push it into the effect
+        comboTextInstance.UpdateText(text);
+
+        // (re)play the particle effect so you see it every time
+        var ps = comboTextInstance.GetComponent<ParticleSystem>();
+        ps.Clear(true);
+        ps.Play(true);
     }
 
     IEnumerator dmgOverTime()
