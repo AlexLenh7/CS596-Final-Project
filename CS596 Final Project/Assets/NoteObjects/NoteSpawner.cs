@@ -1,6 +1,8 @@
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
@@ -79,9 +81,22 @@ public class NoteSpawner : MonoBehaviour
             if (parsedNotes[i].type == NoteType.Hold)
             {
                 //spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
+                
             }
             //print(spawnTimes[i]);
         }
+        for (int i = 0; i < parsedNotes.Count; i++)
+        {
+            if (parsedNotes[i].type == NoteType.Hold)
+            {
+                Note tailNote = parsedNotes[i];
+                tailNote.time += tailNote.holdTime;
+
+                parsedNotes.Insert(i + 1, tailNote);
+                i++;
+            }
+                
+        }    
 
         mapIsReady = true;
         startTime = Time.time;
