@@ -5,8 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // testing beatmap parser
-    
     public Rythm rythm;
     public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
     //public ?? menuChoices; //Menu choice scriptable object
@@ -26,16 +24,17 @@ public class GameManager : MonoBehaviour
     //Get highscore from scriptable object
     string songName = "name"; //menuChoices.songName;
     float highScore = 0;
-    // public string artist = "artist";
     public string difficulty = "difficulty";
     string accuracy = "";
     float numMisses = 0;
     public List<Note> parsedNotes = new List<Note>();
 
+    public GameObject missLine;
+
     private void Start()
     {
         gameActive = true;
-        
+
         // load the song from the static class selected in song selector
         string songName = SongSelection.selectedSongName;
         Debug.Log("Loaded song: " + songName);
@@ -50,7 +49,12 @@ public class GameManager : MonoBehaviour
 
         currScore = 0;
         streak = 0;
+
+        Vector3 adjustedMissLinePos = missLine.transform.localPosition;
+        adjustedMissLinePos.y -= rythm.maxAllowedNoteDelta;
+        missLine.transform.localPosition = adjustedMissLinePos;
     }
+
     void Update()
     {
         if (gameActive == true) // While the game is active, run detections and game element code.
@@ -78,5 +82,4 @@ public class GameManager : MonoBehaviour
             //Change scene to something else
         }
     }
-
 }

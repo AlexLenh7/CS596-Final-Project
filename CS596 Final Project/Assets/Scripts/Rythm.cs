@@ -39,8 +39,7 @@ public class Rythm : MonoBehaviour
     //Queued notes indexed by lane
     public List<Queue<GameObject>> spawnedNotes = new List<Queue<GameObject>>();
 
-    [SerializeField]
-    private float maxAllowedNoteDelta = 0.05f;
+    public float maxAllowedNoteDelta = 0.05f;
 
     void Awake()
     {
