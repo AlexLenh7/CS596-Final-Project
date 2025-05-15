@@ -11,7 +11,6 @@ using UnityEngine.UIElements;
 
 public class NoteSpawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject laneContainer;
     public GameObject lane1;
     public GameObject lane2;
@@ -29,7 +28,7 @@ public class NoteSpawner : MonoBehaviour
     public BeatmapParser beatmapParser;
 
     public List<Note> parsedNotes = new List<Note>();
-    public List<float> spawnTimes = new List<float>(); // Contains time for each note to spawn
+    public List<float> spawnTimes = new List<float>(); //Contains time for each note to spawn
 
     public Dictionary<string, GameObject> laneNums = new Dictionary<string, GameObject>();
     
@@ -50,7 +49,6 @@ public class NoteSpawner : MonoBehaviour
 
     private Dictionary<string, AudioClip> songLibrary;
 
-    float startTime = 0;
     float elapsed = 0;
     float timeToHit = 0; //less is faster, more is slower 
 
@@ -85,22 +83,14 @@ public class NoteSpawner : MonoBehaviour
 
     public void generateMap(List<Note> noteMap) //Add and argument for delay time
     {
-        //beatmapParser.ParseBeatmap(songName);
-        //print("parsed Notes Stored");
         parsedNotes = noteMap;
 
-        //print("After parsed Notes Stored");
-        //print(parsedNotes);
         laneNums["0"] = lane1;
         laneNums["1"] = lane2;
         laneNums["2"] = lane3;
         laneNums["3"] = lane4;
         laneNums["4"] = lane5;
-        //print("lanes set");
 
-
-        //Paste to update()
-        //print(mapIsReady)
         songOffset = GetComponent<BeatmapParser>().initialOffset; //.010f; //.1351f //If early increase, if late decrease
         timeToHit = 2f;
         songDelayTime = timeToHit + 1f;
@@ -111,35 +101,20 @@ public class NoteSpawner : MonoBehaviour
 
             if (parsedNotes[i].type == NoteType.Hold)
             {
-               
                 Note tailNote = parsedNotes[i];
                 tailNote.time += tailNote.holdTime;
-                tailNote.holdTime = .01f;
-
-                //Note hBody = new Note();
-                //hBody.time = (parsedNotes[i].time + tailNote.time)/2f;
-                //hBody.type = NoteType.HoldBody;
-                //hBody.lane = tailNote.lane;
-                //hBody.holdTime = 0f;
-
-                //parsedNotes.Insert(i + 1, hBody);
-                //parsedNotes.Insert(i + 2, tailNote);
-                //i+=2;
+                tailNote.holdTime = 0.01f;
+                
                 parsedNotes.Insert(i + 1, tailNote);
                 i++;
-                //spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
-
             }
-            //print(spawnTimes[i]);
         }   
 
         mapIsReady = true;
-        startTime = Time.time;
         print(parsedNotes.Count + " " + spawnTimes.Count);
         longNotePart = 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (mapIsReady == true && parsedNotes.Count > 0)
@@ -148,21 +123,17 @@ public class NoteSpawner : MonoBehaviour
 
             if (elapsed >= songDelayTime)
             {
-                //startTime = delayTime;
                 if (isPlaying == false)
                 {
-                    //songStartTime = Time.time;
-                    //songStartTime = delayTime;
                     SoundManager.instance.playSound(currentSong, transform, .25f);
                     isPlaying = true;
                 }
-
             }
-            //print(spawnTimes[0]);
-            //if (elapsed >= parsedNotes[0].time)
+            
             if (elapsed >= spawnTimes[0])
             {
                 GameObject noteToUse;
+                
                 if (parsedNotes[0].type == NoteType.Hold)
                 {
                     noteToUse = holdNote;
@@ -171,7 +142,7 @@ public class NoteSpawner : MonoBehaviour
                 {
                     noteToUse = singleNote;
                 }
-                
+
                 //print("spawning note on lane " + parsedNotes[0].lane);
                 spawnedNote = Instantiate(noteToUse, new Vector3(0, .6f, 0), Quaternion.identity);
                 spawnedNote.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
@@ -191,71 +162,45 @@ public class NoteSpawner : MonoBehaviour
 
                 if (parsedNotes[0].type == NoteType.Hold)
                 {
-                    //print(longNotePart);
                     float midpoint;
                     GameObject noteBody;
-                    GameObject temp;
                     float distance;
 
-                    
-
                     spawnedNote.GetComponent<SpriteRenderer>().color = Color.cyan;
+
                     if (longNotePart == 1)
                     {
                         longPair.Add(spawnedNote);
-                        //spawnedNote.GetComponent<NoteCode>().volume = .15f;
                         longNotePart++;
                     }
                     else if (longNotePart == 2)
                     {
-
                         longPair.Add(spawnedNote);
                         spawnedNote.GetComponent<NoteCode>().volume = .07f;
 
                         longPair[0].GetComponent<SpriteRenderer>().color = Color.green;
-                        longPair[1].GetComponent<SpriteRenderer>().color = Color.red;                       
+                        longPair[1].GetComponent<SpriteRenderer>().color = Color.red;
 
                         float headPos = longPair[0].transform.localPosition.y;
-                        //float tailPos = longPair[1].transform.localPosition.y;
                         float tailPos = .6f;
+                        
                         //Generate note body
                         midpoint = (headPos + tailPos) / 2f;
 
                         //Create note body
-
-
                         distance = Mathf.Abs(headPos - tailPos);
-                        
-                        //print(longPair[0].transform.localPosition);
-                        //print(longPair[1].transform.localPosition);
-                        //print("midpoint: " + midpoint);
 
-                        //noteBody = Instantiate(holdBody, laneNums[parsedNotes[0].lane.ToString()].transform);
                         noteBody = Instantiate(holdBody, new Vector3(0, midpoint, 0), Quaternion.identity);
                         noteBody.transform.SetParent(laneNums[parsedNotes[0].lane.ToString()].transform);
-
-                        print(noteBody.transform.localScale);
-                        //holdBody.GetComponent<Transform>().localPosition = new Vector3(0, .6f, 0);
-                        print("Distance between " + headPos + " " + tailPos);
-                        print(distance);
-
-                        print(distance * (.3f / .10f));
-                        noteBody.transform.localScale = new Vector3(1, distance * (.3f/.10f), 1);
+                        noteBody.transform.localScale = new Vector3(1, distance * (.3f / .10f), 1);
                         noteBody.transform.localPosition = new Vector3(0, midpoint, 0);
 
                         noteBody.GetComponent<NoteBody>().distFromTail = distance / 2;
                         noteBody.GetComponent<NoteBody>().tail = longPair[1];
 
-                        //noteBody.GetComponent<NoteCode>().relPosY = midpoint;
-                        //noteBody.GetComponent<NoteCode>().endTime = timeToHit;
-
-                        print("Body position " + noteBody.transform.localPosition);
-
                         longNotePart = 1;
                         longPair.Clear();
                     }
-
-                    
                 }
 
                 //Add spawned note to rythm's queue
@@ -268,15 +213,9 @@ public class NoteSpawner : MonoBehaviour
 
                 rythm.spawnedNotes[lane].Enqueue(spawnedNote);
 
-                //print(parsedNotes[0]);              
                 parsedNotes.RemoveAt(0);
                 spawnTimes.RemoveAt(0);
             }
         }
-        else
-        {
-            //print("-----END OF SONG-----");
-        }
-        
     }
 }
