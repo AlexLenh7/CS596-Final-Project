@@ -82,8 +82,14 @@ public class NoteSpawner : MonoBehaviour
 
             if (parsedNotes[i].type == NoteType.Hold)
             {
+                Note tailNote = parsedNotes[i];
+                tailNote.time += tailNote.holdTime;
+
+                parsedNotes.Insert(i + 1, tailNote);
+                i++;
+
                 //spawnTimes.Add(parsedNotes[i].time - timeToHit + songDelayTime + songOffset + parsedNotes[i].holdTime);
-                
+
             }
             //print(spawnTimes[i]);
         }
@@ -91,17 +97,14 @@ public class NoteSpawner : MonoBehaviour
         {
             if (parsedNotes[i].type == NoteType.Hold)
             {
-                Note tailNote = parsedNotes[i];
-                tailNote.time += tailNote.holdTime;
-
-                parsedNotes.Insert(i + 1, tailNote);
-                i++;
+                
             }
                 
         }    
 
         mapIsReady = true;
         startTime = Time.time;
+        print(parsedNotes.Count + " " + spawnTimes.Count);
     }
 
     // Update is called once per frame
@@ -185,5 +188,10 @@ public class NoteSpawner : MonoBehaviour
                 spawnTimes.RemoveAt(0);
             }
         }
+        else
+        {
+            print("-----END OF SONG-----");
+        }
+        
     }
 }
