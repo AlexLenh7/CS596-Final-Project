@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Loaded song: " + songName);
 
         highScore = GetComponent<RecordSetup>().record.songList[songName].highScore;
+        AudioListener.pause = false;
 
         //Set FPS
         Application.targetFrameRate = 60;
@@ -102,6 +104,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
         HP.SetActive(false);
         ResultScreen.SetActive(true);
+        ResultScreen.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = numMisses.ToString();
         gameActive = false;
     }
 }
