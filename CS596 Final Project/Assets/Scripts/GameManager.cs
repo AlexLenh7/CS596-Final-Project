@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject FailScreen;
     public GameObject ResultScreen;
     [SerializeField] AudioClip failSound;
+    [SerializeField] AudioClip passSound;
 
     //Is the game active
     bool gameActive = true;
@@ -88,6 +89,7 @@ public class GameManager : MonoBehaviour
             if (rythm.currHP > 0 && GetComponent<NoteSpawner>().parsedNotes.Count == 0)
             {
                 StartCoroutine(ShowResults());
+                SoundManager.instance.playSound(passSound, transform, .25f);
             }
         }
         else //Otherwise, save necessary values into scriptable object records and change scene.

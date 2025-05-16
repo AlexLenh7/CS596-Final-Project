@@ -587,6 +587,7 @@ MonoBehaviour:
   maxHP: 100
   score: 0
   streak: 0
+  numMisses: 0
   healthEffects:
   - 2
   - 1
@@ -616,7 +617,8 @@ MonoBehaviour:
   HP: {fileID: 407731272}
   FailScreen: {fileID: 1677544375}
   ResultScreen: {fileID: 1549672335}
-  difficulty: difficulty
+  failSound: {fileID: 8300000, guid: 0e85feed587a94844b81cba7a0e4b809, type: 3}
+  passSound: {fileID: 8300000, guid: 1e6eef2f63139bb4ea56262fac162187, type: 3}
   parsedNotes: []
   missLine: {fileID: 1543428628}
 --- !u!4 &272170813
@@ -1989,7 +1991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e40f15a5e66d9b409c22b69f6f42c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tapSound: {fileID: 8300000, guid: eaa76462919a7544c9601b9d92cbc87f, type: 3}
+  missSound: {fileID: 0}
 --- !u!50 &1543428632
 Rigidbody2D:
   serializedVersion: 5
