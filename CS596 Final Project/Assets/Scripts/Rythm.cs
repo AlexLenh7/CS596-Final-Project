@@ -60,6 +60,26 @@ public class Rythm : MonoBehaviour
 
     void Start()
     {
+        string difficulty = GameObject.Find("Game Manager").GetComponent<RecordSetup>().record.songList[SongSelection.selectedSongName].highDiff;
+
+        switch (difficulty)
+        {
+            case "Easy":
+                dmgValue = 0.1f;
+                break;
+            case "Medium":
+                dmgValue = 0.2f;
+                break;
+            case "Hard":
+                dmgValue = 0.4f;
+                break;
+            case "Expert":
+                dmgValue = 0.8f;
+                break;
+        }
+
+        Debug.Log("Damage value every " + drainRate + " seconds: " + dmgValue);
+
         //Bleed damage over time
         StartCoroutine("dmgOverTime");
 
