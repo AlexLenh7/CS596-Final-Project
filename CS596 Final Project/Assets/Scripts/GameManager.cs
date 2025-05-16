@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     int totalNotes = 0;
 
     public GameObject missLine;
-
+    float currHP = 100;
     private void Start()
     {
         gameActive = true;
@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
             currScore = rythm.score;
             streak = rythm.streak;
             numMisses = rythm.numMisses;
+            //currHP = rythm.currHP;
+            currHP = 100;
             CalculateAccuracy();
 
             // Game over when hp falls below 0
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
             }
             
             // Result screen when no more notes and hp isn't 0
-            if (rythm.currHP > 0 && GetComponent<NoteSpawner>().parsedNotes.Count == 0)
+            if (currHP > 0 && GetComponent<NoteSpawner>().parsedNotes.Count <= 0)
             {
                 StartCoroutine(ShowResults());
             }

@@ -7,7 +7,7 @@ public class MainMenu : MonoBehaviour
     public void LevelSelect()
     {
         AudioListener.pause = false;
-        SceneManager.LoadScene(2); 
+        SceneManager.LoadScene("LevelSelect"); 
     }
 
     // retry button
