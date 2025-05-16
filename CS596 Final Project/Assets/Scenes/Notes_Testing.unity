@@ -560,6 +560,7 @@ GameObject:
   - component: {fileID: 272170814}
   - component: {fileID: 272170815}
   - component: {fileID: 272170816}
+  - component: {fileID: 272170817}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -587,6 +588,7 @@ MonoBehaviour:
   maxHP: 100
   score: 0
   streak: 0
+  numMisses: 0
   healthEffects:
   - 2
   - 1
@@ -612,11 +614,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rythm: {fileID: 272170811}
-  record: {fileID: 11400000, guid: 39bac1aaf20e13442b5992bae14fb2cd, type: 2}
   HP: {fileID: 407731272}
   FailScreen: {fileID: 1677544375}
   ResultScreen: {fileID: 1549672335}
-  difficulty: difficulty
   parsedNotes: []
   missLine: {fileID: 1543428628}
 --- !u!4 &272170813
@@ -697,6 +697,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 497639089}
   rythm: {fileID: 272170811}
+--- !u!114 &272170817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272170810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970045da0ab8a85498ab8c9d07536b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  record: {fileID: 0}
 --- !u!1 &341238428
 GameObject:
   m_ObjectHideFlags: 0

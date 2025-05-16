@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public Rythm rythm;
-    public Records record; //scriptable object that stores anything that needs to persist like high score and grades.
     //public ?? menuChoices; //Menu choice scriptable object
 
     // Alternate screens to be shown
@@ -40,7 +39,7 @@ public class GameManager : MonoBehaviour
         string songName = SongSelection.selectedSongName;
         Debug.Log("Loaded song: " + songName);
 
-        highScore = record.songList[songName].highScore;
+        highScore = GetComponent<RecordSetup>().record.songList[songName].highScore;
 
         //Set FPS
         Application.targetFrameRate = 60;
@@ -51,7 +50,6 @@ public class GameManager : MonoBehaviour
         currScore = 0;
         streak = 0;
         totalNotes = parsedNotes.Count;
-        Debug.Log(totalNotes);
 
         Vector3 adjustedMissLinePos = missLine.transform.localPosition;
         adjustedMissLinePos.y -= rythm.maxAllowedNoteDelta;
@@ -92,8 +90,8 @@ public class GameManager : MonoBehaviour
             //If the current score is the best, save the full record to the current song's entry
             if (currScore > highScore)
             {
-                string difficulty = record.songList[songName].highDiff;
-                record.songList[songName] = new SongData(songName, currScore, difficulty, accuracy, numMisses);
+                string difficulty = GetComponent<RecordSetup>().record.songList[songName].highDiff;
+                GetComponent<RecordSetup>().record.songList[songName] = new SongData(songName, currScore, difficulty, accuracy, numMisses);
             }
         }
     }

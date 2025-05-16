@@ -5,9 +5,10 @@ public class RecordSetup : MonoBehaviour
 {
     public Records record;
     // Setup empty record with default values
-    void Start()
+    void Awake()
     {
         //SongData(string songName, float highScore, string highDiff, string accuracy, float numMisses)
+        record = new Records();
 
         //Easy
         record.songList["Hanazawa Kana - Renai Circulation"] 
@@ -42,11 +43,5 @@ public class RecordSetup : MonoBehaviour
             index++;
         }
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
