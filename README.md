@@ -60,8 +60,10 @@ N/A
 ![RhythmGameConcepts - Settings](https://github.com/user-attachments/assets/384c1fce-baaa-4789-846b-c63d667ad400)
 
 
+Video demo:
+https://youtu.be/p3wyDETfZdo?si=QocolenUAFMTuTOu
 
-
+https://youtu.be/aCXP0MXtKtM?si=t-3aU6DNbc0019In
 
 
 
