@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MissLine : MonoBehaviour
 {
-    [SerializeField] AudioClip tapSound;
+    [SerializeField] AudioClip missSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,7 +13,7 @@ public class MissLine : MonoBehaviour
             //Destroy Coin
             collidedWith.GetComponent<NoteCode>().DestroySelf(true);
 
-            //SoundManager.instance.playSound(tapSound, transform, .15f);
+            SoundManager.instance.playSound(missSound, transform, .15f);
         }
     }
 }
