@@ -6,6 +6,7 @@ public class MainMenu : MonoBehaviour
     // Level select screen
     public void LevelSelect()
     {
+        AudioListener.pause = false;
         SceneManager.LoadScene(2); 
     }
 
