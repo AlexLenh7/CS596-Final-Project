@@ -11,25 +11,25 @@ public class RecordSetup : MonoBehaviour
 
         //Easy
         record.songList["Hanazawa Kana - Renai Circulation"] 
-            = new SongData("Hanazawa Kana - Renai Circulation", 0, "None", "None", 0);
+            = new SongData("Hanazawa Kana - Renai Circulation", 0, "Easy", 0, 0);
 
         //Medium
         record.songList["M2U - Masquerade"]
-            = new SongData("M2U - Masquerade", 0, "None", "None", 0);
+            = new SongData("M2U - Masquerade", 0, "Medium", 0, 0);
 
         record.songList["YUC'e - macaron moon"]
-            = new SongData("YUC'e - macaron moon", 0, "None", "None", 0);
+            = new SongData("YUC'e - macaron moon", 0, "Medium", 0, 0);
 
         //Hard
         record.songList["Future Candy - YUC'e"]
-            = new SongData("Future Candy - YUC'e", 0, "None", "None", 0);
+            = new SongData("Future Candy - YUC'e", 0, "Hard", 0, 0);
 
         record.songList["Redside - Sidequest"]
-            = new SongData("Redside - Sidequest", 0, "None", "None", 0);
+            = new SongData("Redside - Sidequest", 0, "Hard", 0, 0);
 
         //Expert
         record.songList["FREEDOM DiVE - xi"]
-            = new SongData("FREEDOM DiVE - xi", 0, "None", "None", 0);
+            = new SongData("FREEDOM DiVE - xi", 0, "Expert", 0, 0);
 
         int index = 0;
         foreach (var entry in record.songList)

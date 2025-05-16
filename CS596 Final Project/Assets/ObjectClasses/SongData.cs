@@ -8,10 +8,10 @@ public class SongData
     // public string artist = "artist";
     public string highDiff = "difficulty";
     public float highScore = 0;
-    public string accuracy = "F";
+    public float accuracy = 0;
     public float numMisses = 0;
 
-    public SongData(string songName, float highScore, string highDiff, string accuracy, float numMisses)
+    public SongData(string songName, float highScore, string highDiff, float accuracy, float numMisses)
     {
         this.songName = songName;
         this.highScore = highScore;

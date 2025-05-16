@@ -21,14 +21,15 @@ public class GameManager : MonoBehaviour
     //read data from rythm
     float currScore = 0;
     float streak = 0;
-
+    int numMisses = 0;
+    
     //Get highscore from scriptable object
     string songName = "name"; //menuChoices.songName;
-    float highScore = 0;
-    public string difficulty = "difficulty";
-    string accuracy = "";
-    float numMisses = 0;
+    float highScore = 0f;
+    float accuracy = 0f;
+
     public List<Note> parsedNotes = new List<Note>();
+    int totalNotes = 0;
 
     public GameObject missLine;
 
@@ -40,7 +41,7 @@ public class GameManager : MonoBehaviour
         string songName = SongSelection.selectedSongName;
         Debug.Log("Loaded song: " + songName);
 
-        highScore = 0;//record.songList[songName].highScore;
+        highScore = record.songList[songName].highScore;
 
         //Set FPS
         Application.targetFrameRate = 60;
@@ -50,10 +51,17 @@ public class GameManager : MonoBehaviour
 
         currScore = 0;
         streak = 0;
+        totalNotes = parsedNotes.Count;
+        Debug.Log(totalNotes);
 
         Vector3 adjustedMissLinePos = missLine.transform.localPosition;
         adjustedMissLinePos.y -= rythm.maxAllowedNoteDelta;
         missLine.transform.localPosition = adjustedMissLinePos;
+    }
+
+    void CalculateAccuracy()
+    {
+        accuracy = currScore / (rythm.scoreEffects[(int)Rythm.effectIdxs.PERFECT] * totalNotes);
     }
 
     void Update()
@@ -62,10 +70,12 @@ public class GameManager : MonoBehaviour
         {
             currScore = rythm.score;
             streak = rythm.streak;
-            //Do all detections here.
+            numMisses = rythm.numMisses;
+            CalculateAccuracy();
 
             // Game over when hp falls below 0
-            if (rythm.currHP <= 0) {
+            if (rythm.currHP <= 0)
+            {
                 HP.SetActive(false);
                 FailScreen.SetActive(true);
                 gameActive = false;
@@ -75,7 +85,8 @@ public class GameManager : MonoBehaviour
             }
             
             // Result screen when no more notes and hp isn't 0
-            if (rythm.currHP > 0 && GetComponent<NoteSpawner>().parsedNotes.Count == 0) {
+            if (rythm.currHP > 0 && GetComponent<NoteSpawner>().parsedNotes.Count == 0)
+            {
                 StartCoroutine(ShowResults());
             }
         }
@@ -84,10 +95,9 @@ public class GameManager : MonoBehaviour
             //If the current score is the best, save the full record to the current song's entry
             if (currScore > highScore)
             {
+                string difficulty = record.songList[songName].highDiff;
                 record.songList[songName] = new SongData(songName, currScore, difficulty, accuracy, numMisses);
-            }   
-
-            //Change scene to something else
+            }
         }
     }
 
