@@ -17,15 +17,16 @@ public class Rythm : MonoBehaviour
     //Terry: Using the data collected from inputs, determine scores and conditions within this entire script
 
     //Game manager will read these variables to determine win conditions.
-    public float currHP = 100; //Heal this value depending on accuracy
-    public float maxHP = 100; //MaxHP
-    public float score = 0; //add to this score based on input accuracy data
-    public int streak = 0; //add to this value as long as the player does not land a miss
+    public float currHP = 100;
+    public float maxHP = 100;
+    public float score = 0;
+    public int streak = 0;
+    public int numMisses = 0;
 
     //Health/Score effects for perfect hit, great hit, good hit, miss
     public float[] healthEffects = new float[4] { 2f, 1f, 0f, -5f };
     public float[] scoreEffects = new float[4] { 300f, 150f, 50f, 0f };
-    private enum effectIdxs { PERFECT, GREAT, OK, MISS, EFFECT_LENGTH };
+    public enum effectIdxs { PERFECT, GREAT, OK, MISS, EFFECT_LENGTH };
     private int effectsSize = (int)effectIdxs.EFFECT_LENGTH;
 
     //Amount of HP being subtracted 
@@ -146,6 +147,7 @@ public class Rythm : MonoBehaviour
     {
         streak = 0;
         currHP += healthEffects[(int)effectIdxs.MISS];
+        numMisses++;
     }
 
     public void BeginTouch(int lane)
@@ -207,6 +209,12 @@ public class Rythm : MonoBehaviour
         int effectIdx = CalculateAccuracyIdx(note);
         
         currHP += healthEffects[effectIdx];
+
+        if (currHP > maxHP)
+        {
+            currHP = maxHP;
+        }
+
         score += scoreEffects[effectIdx];
 
         note.GetComponent<NoteCode>().DestroySelf(false);
