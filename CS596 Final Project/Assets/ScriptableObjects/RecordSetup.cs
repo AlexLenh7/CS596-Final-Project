@@ -22,15 +22,15 @@ public class RecordSetup : MonoBehaviour
             = new SongData("YUC'e - macaron moon", 0, "Medium", 0, 0);
 
         //Hard
-        record.songList["Future Candy - YUC'e"]
-            = new SongData("Future Candy - YUC'e", 0, "Hard", 0, 0);
+        record.songList["YUC'e - Future Candy"]
+            = new SongData("YUC'e Future Candy", 0, "Hard", 0, 0);
 
         record.songList["Redside - Sidequest"]
             = new SongData("Redside - Sidequest", 0, "Hard", 0, 0);
 
         //Expert
-        record.songList["FREEDOM DiVE - xi"]
-            = new SongData("FREEDOM DiVE - xi", 0, "Expert", 0, 0);
+        record.songList["xi - FREEDOM DiVE"]
+            = new SongData("xi - FREEDOM DiVE", 0, "Expert", 0, 0);
 
         int index = 0;
         foreach (var entry in record.songList)
