@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject HP;
     public GameObject FailScreen;
     public GameObject ResultScreen;
+    [SerializeField] AudioClip failSound;
 
     //Is the game active
     bool gameActive = true;
@@ -68,6 +69,8 @@ public class GameManager : MonoBehaviour
                 HP.SetActive(false);
                 FailScreen.SetActive(true);
                 gameActive = false;
+                AudioListener.pause = true;
+                SoundManager.instance.playSound(failSound, transform, .25f);
                 GetComponent<NoteSpawner>().parsedNotes.Clear(); 
             }
             
