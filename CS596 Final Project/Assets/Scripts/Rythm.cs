@@ -30,10 +30,10 @@ public class Rythm : MonoBehaviour
     private int effectsSize = (int)effectIdxs.EFFECT_LENGTH;
 
     //Amount of HP being subtracted 
-    float dmgValue = .2f; //Should be taken from difficulty choice in the main menu's scriptable object
+    float dmgValue = .1f; //Should be taken from difficulty choice in the main menu's scriptable object
 
     //Frequency in seconds that you lose take the dmgValue
-    float drainRate = 1f; //Should be taken from difficulty choice in the main menu's scriptable object
+    float drainRate = .2f; //Should be taken from difficulty choice in the main menu's scriptable object
 
     public Transform timingLine;
 

@@ -7,6 +7,6 @@ public class SongLoader : MonoBehaviour
     public void SelectAndLoadSong(string songName)
     {
         SongSelection.selectedSongName = songName;
-        SceneManager.LoadScene("Notes_Testing"); 
+        SceneManager.LoadScene(3); 
     }
 }
